@@ -1,0 +1,11 @@
+php artisan scaffold::make author name:string:100 nickname:string:50 note:string:200
+php artisan scaffold::make translator name:string:100 nickname:string:50 note:string:200
+php artisan scaffold::make compiler name:string:100 nickname:string:50 note:string:200
+php artisan scaffold::make illustrator name:string:100 nickname:string:50 note:string:200
+php artisan scaffold::make printhouse name:string:100
+php artisan scaffold::make publisher name:string:100
+php artisan scaffold::make theme name:string:50
+php artisan scaffold::make sequence name:string:100
+php artisan scaffold::make language name:string:30
+php artisan scaffold::make book title:string:100 edition:string:30 pub_date:string:30 volume:integer pages:integer seq_num:integer note:string:200 has_one:sequence has_many:author has_many:compiler has_many:illustrator has_many:translator has_many:publisher has_many:printhouse has_many:language has_many:theme
+php artisan scaffold::make content idx:integer title:string:100 note:string:200 belongs_to:book has_many:author has_many:illustrator has_many:translator has_many:language has_many:theme
