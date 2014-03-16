@@ -14,5 +14,10 @@ class Publisher extends Eloquent {
 	 *
 	 * @var bool
 	 */
-	public static $timestamps = false;
+	public static $timestamps = true;
+
+	public function books() {
+		return $this->has_many_and_belongs_to('Book', 'book_publisher');
+	}
+
 }

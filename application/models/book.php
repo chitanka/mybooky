@@ -14,16 +14,47 @@ class Book extends Eloquent {
 	 *
 	 * @var bool
 	 */
-	public static $timestamps = false;
+	public static $timestamps = true;
 
 	/**
 	 * Establish the relationship between a book and a sequence.
 	 *
 	 * @return Laravel\Database\Eloquent\Relationships\Has_One
 	 */
-	public function sequence()
-	{
-		return $this->has_one('Sequence');
+	public function sequence() {
+		return $this->belongs_to('Sequence');
+	}
+
+	public function contents() {
+		return $this->has_many('Content');
+	}
+
+	public function authors() {
+		return $this->has_many_and_belongs_to('Author', 'book_author');
+	}
+
+	public function translators() {
+		return $this->has_many_and_belongs_to('Translator', 'book_translator');
+	}
+
+	public function compilers() {
+		return $this->has_many_and_belongs_to('Compiler', 'book_compiler');
+	}
+
+	public function illustrators() {
+		return $this->has_many_and_belongs_to('Illustrator', 'book_illustrator');
+	}
+
+	public function publishers() {
+		return $this->has_many_and_belongs_to('Publisher', 'book_publisher');
+	}
+
+	public function printhouses() {
+		return $this->has_many_and_belongs_to('Printhouse', 'book_printhouse');
+	}
+
+	public function languages() {
+		return $this->has_many_and_belongs_to('Language', 'book_language');
 	}
 
 	/**
@@ -31,8 +62,8 @@ class Book extends Eloquent {
 	 *
 	 * @return Laravel\Database\Eloquent\Relationships\Has_Many
 	 */
-	public function themes()
-	{
-		return $this->has_many('Theme');
+	public function themes() {
+		return $this->has_many_and_belongs_to('Theme', 'book_theme');
 	}
+
 }

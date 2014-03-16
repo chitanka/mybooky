@@ -59,6 +59,8 @@
 			</div>
 		</div>
 
+		Form::select('name', array('key' => 'value'), 'key', array('class' => 'name'));
+
 		<div class="actions">
 			{{Form::submit('Save', array('class' => 'btn primary'))}}
 

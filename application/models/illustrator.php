@@ -14,5 +14,13 @@ class Illustrator extends Eloquent {
 	 *
 	 * @var bool
 	 */
-	public static $timestamps = false;
+	public static $timestamps = true;
+
+	public function books() {
+		return $this->has_many_and_belongs_to('Book', 'book_illustrator');
+	}
+
+	public function contents() {
+		return $this->has_many_and_belongs_to('Content', 'content_illustrator');
+	}
 }
