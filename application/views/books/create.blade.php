@@ -59,6 +59,14 @@
 			</div>
 		</div>
 
+		<div class="clearfix">
+			{{Form::label('themes', 'Themes')}}
+
+			<div class="input">
+				{{Form::select('themes[]', $themeOptions, Input::old('themes'), array('multiple', 'class' => 'span6 themes', 'placeholder' => 'Избор'))}}
+			</div>
+		</div>
+
 		<div class="actions">
 			{{Form::submit('Save', array('class' => 'btn primary'))}}
 

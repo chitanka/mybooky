@@ -34,10 +34,11 @@ class Books_Controller extends Base_Controller {
 	 *
 	 * @return void
 	 */
-	public function get_create()
-	{
+	public function get_create() {
 		$this->layout->title   = 'New Book';
-		$this->layout->content = View::make('books.create');
+		$this->layout->content = View::make('books.create')->with(array(
+			'themeOptions' => Theme::lists('name', 'id'),
+		));
 	}
 
 	/**
@@ -45,20 +46,18 @@ class Books_Controller extends Base_Controller {
 	 *
 	 * @return Response
 	 */
-	public function post_create()
-	{
+	public function post_create() {
 		$validation = Validator::make(Input::all(), array(
 			'title' => array('required', 'max:100'),
-			'edition' => array('required', 'max:30'),
-			'pub_date' => array('required', 'max:30'),
-			'volume' => array('required', 'integer'),
-			'pages' => array('required', 'integer'),
-			'seq_num' => array('required', 'integer'),
-			'note' => array('required', 'max:200'),
+			'edition' => array('max:30'),
+			'pub_date' => array('max:30'),
+			'volume' => array('integer'),
+			'pages' => array('integer'),
+			'seq_num' => array('integer'),
+			'note' => array('max:200'),
 		));
 
-		if($validation->valid())
-		{
+		if($validation->valid()) {
 			$book = new Book;
 
 			$book->title = Input::get('title');
@@ -68,6 +67,8 @@ class Books_Controller extends Base_Controller {
 			$book->pages = Input::get('pages');
 			$book->seq_num = Input::get('seq_num');
 			$book->note = Input::get('note');
+			$book->save();
+			$book->themes()->sync(Input::get('themes'));
 
 			$book->save();
 
@@ -76,12 +77,9 @@ class Books_Controller extends Base_Controller {
 			return Redirect::to('books');
 		}
 
-		else
-		{
-			return Redirect::to('books/create')
-					->with_errors($validation->errors)
-					->with_input();
-		}
+		return Redirect::to('books/create')
+			->with_errors($validation->errors)
+			->with_input();
 	}
 
 	/**
