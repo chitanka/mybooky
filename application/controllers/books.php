@@ -119,7 +119,10 @@ class Books_Controller extends Base_Controller {
 		}
 
 		$this->layout->title   = 'Editing Book';
-		$this->layout->content = View::make('books.edit')->with('book', $book);
+		$this->layout->content = View::make('books.edit')->with(array(
+			'book' => $book,
+			'themeOptions' => Theme::lists('name', 'id'),
+		));
 	}
 
 	/**
@@ -128,24 +131,21 @@ class Books_Controller extends Base_Controller {
 	 * @param  int       $id
 	 * @return Response
 	 */
-	public function post_edit($id)
-	{
+	public function post_edit($id) {
 		$validation = Validator::make(Input::all(), array(
 			'title' => array('required', 'max:100'),
-			'edition' => array('required', 'max:30'),
-			'pub_date' => array('required', 'max:30'),
-			'volume' => array('required', 'integer'),
-			'pages' => array('required', 'integer'),
-			'seq_num' => array('required', 'integer'),
-			'note' => array('required', 'max:200'),
+			'edition' => array('max:30'),
+			'pub_date' => array('max:30'),
+			'volume' => array('integer'),
+			'pages' => array('integer'),
+			'seq_num' => array('integer'),
+			'note' => array('max:200'),
 		));
 
-		if($validation->valid())
-		{
+		if($validation->valid()) {
 			$book = Book::find($id);
 
-			if(is_null($book))
-			{
+			if(is_null($book)) {
 				return Redirect::to('books');
 			}
 
@@ -156,6 +156,7 @@ class Books_Controller extends Base_Controller {
 			$book->pages = Input::get('pages');
 			$book->seq_num = Input::get('seq_num');
 			$book->note = Input::get('note');
+			$book->themes()->sync(Input::get('themes'));
 
 			$book->save();
 
@@ -164,12 +165,9 @@ class Books_Controller extends Base_Controller {
 			return Redirect::to('books');
 		}
 
-		else
-		{
-			return Redirect::to('books/edit/'.$id)
-					->with_errors($validation->errors)
-					->with_input();
-		}
+		return Redirect::to('books/edit/'.$id)
+			->with_errors($validation->errors)
+			->with_input();
 	}
 
 	/**

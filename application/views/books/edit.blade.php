@@ -59,7 +59,14 @@
 			</div>
 		</div>
 
-		Form::select('name', array('key' => 'value'), 'key', array('class' => 'name'));
+		<div class="clearfix">
+			{{Form::label('themes', 'Themes')}}
+
+			<div class="input">
+				{{Form::select('themes[]', $themeOptions, Input::old('themes', $book->themes()->lists('id')), array('multiple', 'class' => 'span6 themes', 'placeholder' => 'Избор'))}}
+			</div>
+		</div>
+
 
 		<div class="actions">
 			{{Form::submit('Save', array('class' => 'btn primary'))}}

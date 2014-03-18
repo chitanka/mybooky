@@ -12,29 +12,29 @@ class Init {
 		Schema::create('authors', function($table) {
 			$table->increments('id');
 			$table->string('name', 100);
-			$table->string('nickname', 50);
-			$table->string('note', 200);
+			$table->string('nickname', 50)->nullable();
+			$table->string('note', 200)->nullable();
 			$table->timestamps();
 		});
 		Schema::create('translators', function($table) {
 			$table->increments('id');
 			$table->string('name', 100);
-			$table->string('nickname', 50);
-			$table->string('note', 200);
+			$table->string('nickname', 50)->nullable();
+			$table->string('note', 200)->nullable();
 			$table->timestamps();
 		});
 		Schema::create('compilers', function($table) {
 			$table->increments('id');
 			$table->string('name', 100);
-			$table->string('nickname', 50);
-			$table->string('note', 200);
+			$table->string('nickname', 50)->nullable();
+			$table->string('note', 200)->nullable();
 			$table->timestamps();
 		});
 		Schema::create('illustrators', function($table) {
 			$table->increments('id');
 			$table->string('name', 100);
-			$table->string('nickname', 50);
-			$table->string('note', 200);
+			$table->string('nickname', 50)->nullable();
+			$table->string('note', 200)->nullable();
 			$table->timestamps();
 		});
 		Schema::create('languages', function($table) {
@@ -65,13 +65,13 @@ class Init {
 		Schema::create('books', function($table) {
 			$table->increments('id');
 			$table->string('title', 100);
-			$table->string('edition', 30);
-			$table->string('pub_date', 30);
+			$table->string('edition', 30)->nullable();
+			$table->string('pub_date', 30)->nullable();
 			$table->integer('volume')->nullable();
-			$table->integer('pages');
-			$table->integer('sequence_id')->unsigned();
+			$table->integer('pages')->nullable();
+			$table->integer('sequence_id')->unsigned()->nullable();
 			$table->integer('seq_num')->nullable();
-			$table->string('note', 200);
+			$table->string('note', 200)->nullable();
 			$table->timestamps();
 		});
 		Schema::create('contents', function($table) {
@@ -79,7 +79,7 @@ class Init {
 			$table->integer('book_id')->unsigned();
 			$table->integer('idx');
 			$table->string('title', 250);
-			$table->string('note', 200);
+			$table->string('note', 200)->nullable();
 			$table->timestamps();
 		});
 
