@@ -20,4 +20,7 @@ class Publisher extends Eloquent {
 		return $this->has_many_and_belongs_to('Book', 'book_publisher');
 	}
 
+	public function __toString() {
+		return $this->name;
+	}
 }

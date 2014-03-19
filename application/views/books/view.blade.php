@@ -38,7 +38,7 @@
 </p>
 
 <p><a href="{{URL::to('books/edit/'.$book->id)}}" class="btn">Edit</a> <a href="{{URL::to('books/delete/'.$book->id)}}" class="btn danger" onclick="return confirm('Are you sure?')">Delete</a></p>
-<h2>Themes</h2>
+<h2>{{ __('admin.themes') }}</h2>
 
 @if(count($book->themes) == 0)
 	<p>No themes.</p>

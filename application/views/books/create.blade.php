@@ -1,9 +1,9 @@
 <div class="span16">
 	<ul class="breadcrumb span6">
 		<li>
-			<a href="{{URL::to('books')}}">Books</a> <span class="divider">/</span>
+			<a href="{{URL::to('books')}}">{{__('admin.title_books_index')}}</a> <span class="divider">/</span>
 		</li>
-		<li class="active">New Book</li>
+		<li class="active">{{__('admin.title_books_create')}}</li>
 	</ul>
 </div>
 

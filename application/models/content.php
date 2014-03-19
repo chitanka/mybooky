@@ -51,4 +51,8 @@ class Content extends Eloquent {
 		return $this->has_many_and_belongs_to('Theme', 'content_theme');
 	}
 
+
+	public function __toString() {
+		return $this->title;
+	}
 }

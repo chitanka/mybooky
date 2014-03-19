@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 	<title>{{$title}}</title>
-	<link rel="stylesheet" type="text/css" href="{{asset('bundles/scaffold/css/bootstrap.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.css')}}">
 	<link href="{{asset('select2-3.4.5/select2.css')}}" rel="stylesheet">
 	<style>
 		body { margin: 40px; }
@@ -20,7 +20,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">MyBooky</a>
+					<a class="navbar-brand" href="/">MyBooky</a>
 				</div>
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
@@ -82,6 +82,7 @@
 		</div>
 	</div>
 	<script src="{{asset('js/jquery-1.11.0.min.js')}}"></script>
+	<script src="{{asset('js/bootstrap.min.js')}}"></script>
 	<script src="{{asset('select2-3.4.5/select2.min.js')}}"></script>
 	<script>
 		$(document).ready(function() {

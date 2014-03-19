@@ -19,4 +19,8 @@ class Sequence extends Eloquent {
 	public function books() {
 		return $this->has_many('Book');
 	}
+
+	public function __toString() {
+		return $this->name;
+	}
 }

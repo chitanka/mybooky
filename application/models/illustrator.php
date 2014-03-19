@@ -23,4 +23,8 @@ class Illustrator extends Eloquent {
 	public function contents() {
 		return $this->has_many_and_belongs_to('Content', 'content_illustrator');
 	}
+
+	public function __toString() {
+		return $this->name;
+	}
 }

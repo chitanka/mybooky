@@ -13,10 +13,10 @@
 {{Form::open(null, 'post', array('class' => 'form-stacked span16'))}}
 	<fieldset>
 		<div class="clearfix">
-			{{Form::label('book_id', 'Book Id')}}
+			{{Form::label('book', 'Book')}}
 
 			<div class="input">
-				{{Form::text('book_id', Input::old('book_id', $book_id), array('class' => 'span6'))}}
+				{{Form::select('book', $bookOptions, Input::old('book', $book), array('class' => 'span6'))}}
 			</div>
 		</div>
 		<div class="clearfix">

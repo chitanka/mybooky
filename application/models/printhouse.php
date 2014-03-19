@@ -19,4 +19,8 @@ class Printhouse extends Eloquent {
 	public function books() {
 		return $this->has_many_and_belongs_to('Book', 'book_printhouse');
 	}
+
+	public function __toString() {
+		return $this->name;
+	}
 }

@@ -27,4 +27,5 @@ class Theme extends Eloquent {
 	public function __toString() {
 		return $this->name;
 	}
+
 }
