@@ -1,6 +1,6 @@
 <?php
 
-class Theme extends Eloquent {
+class Theme extends \Laravel\Database\Eloquent\Model {
 
 	/**
 	 * The name of the table associated with the model.

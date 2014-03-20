@@ -1,6 +1,6 @@
 <?php
 
-class Printhouse extends Eloquent {
+class Printhouse extends \Laravel\Database\Eloquent\Model {
 
 	/**
 	 * The name of the table associated with the model.

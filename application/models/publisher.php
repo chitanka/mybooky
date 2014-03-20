@@ -1,6 +1,6 @@
 <?php
 
-class Publisher extends Eloquent {
+class Publisher extends \Laravel\Database\Eloquent\Model {
 
 	/**
 	 * The name of the table associated with the model.

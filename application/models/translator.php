@@ -1,6 +1,6 @@
 <?php
 
-class Translator extends Eloquent {
+class Translator extends \Laravel\Database\Eloquent\Model {
 
 	/**
 	 * The name of the table associated with the model.

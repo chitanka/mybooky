@@ -1,6 +1,6 @@
 <?php
 
-class Illustrator extends Eloquent {
+class Illustrator extends \Laravel\Database\Eloquent\Model {
 
 	/**
 	 * The name of the table associated with the model.

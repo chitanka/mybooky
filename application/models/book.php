@@ -1,6 +1,6 @@
 <?php
 
-class Book extends Eloquent {
+class Book extends \Laravel\Database\Eloquent\Model {
 
 	/**
 	 * The name of the table associated with the model.

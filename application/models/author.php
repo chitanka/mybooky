@@ -1,6 +1,6 @@
 <?php
 
-class Author extends Eloquent {
+class Author extends \Laravel\Database\Eloquent\Model {
 
 	/**
 	 * The name of the table associated with the model.

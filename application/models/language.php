@@ -1,6 +1,6 @@
 <?php
 
-class Language extends Eloquent {
+class Language extends \Laravel\Database\Eloquent\Model {
 
 	/**
 	 * The name of the table associated with the model.
