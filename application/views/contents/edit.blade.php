@@ -1,10 +1,10 @@
 <div class="span16">
 	<ul class="breadcrumb span6">
 		<li>
-			<a href="{{URL::to('books/view/'.$content->book->id)}}">Book</a> <span class="divider">/</span>
+			<a href="{{URL::to('books/view/'.$content->book->id)}}">Book</a> 
 		</li>
 		<li>
-			<a href="{{URL::to('contents')}}">Contents</a> <span class="divider">/</span>
+			<a href="{{URL::to('contents')}}">Contents</a> 
 		</li>
 		<li class="active">Editing Content</li>
 	</ul>
@@ -42,7 +42,7 @@
 		</div>
 
 		<div class="actions">
-			{{Form::submit('Save', array('class' => 'btn primary'))}}
+			{{Form::submit('Save', array('class' => 'btn btn-primary'))}}
 
 			or <a href="{{URL::to(Request::referrer())}}">Cancel</a>
 		</div>

@@ -1,7 +1,7 @@
 @if(count($compilers) == 0)
 	<p>No compilers.</p>
 @else
-	<table>
+	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>Name</th>
@@ -18,9 +18,9 @@
 					<td>{{$compiler->nickname}}</td>
 					<td>{{$compiler->note}}</td>
 					<td>
-						<a href="{{URL::to('compilers/view/'.$compiler->id)}}" class="btn">View</a>
-						<a href="{{URL::to('compilers/edit/'.$compiler->id)}}" class="btn">Edit</a>
-						<a href="{{URL::to('compilers/delete/'.$compiler->id)}}" class="btn danger" onclick="return confirm('Are you sure?')">Delete</a>
+						<a href="{{URL::to('compilers/view/'.$compiler->id)}}" class="btn btn-default">View</a>
+						<a href="{{URL::to('compilers/edit/'.$compiler->id)}}" class="btn btn-default">Edit</a>
+						<a href="{{URL::to('compilers/delete/'.$compiler->id)}}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
 					</td>
 				</tr>
 			@endforeach
@@ -28,4 +28,4 @@
 	</table>
 @endif
 
-<p><a class="btn success" href="{{URL::to('compilers/create')}}">Create new Compiler</a></p>
+<p><a class="btn btn-success" href="{{URL::to('compilers/create')}}">Create new Compiler</a></p>

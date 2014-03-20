@@ -1,7 +1,7 @@
 @if(count($themes) == 0)
 	<p>No themes.</p>
 @else
-	<table>
+	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>Name</th>
@@ -14,9 +14,9 @@
 				<tr>
 					<td>{{$theme->name}}</td>
 					<td>
-						<a href="{{URL::to('themes/view/'.$theme->id)}}" class="btn">View</a>
-						<a href="{{URL::to('themes/edit/'.$theme->id)}}" class="btn">Edit</a>
-						<a href="{{URL::to('themes/delete/'.$theme->id)}}" class="btn danger" onclick="return confirm('Are you sure?')">Delete</a>
+						<a href="{{URL::to('themes/view/'.$theme->id)}}" class="btn btn-default">View</a>
+						<a href="{{URL::to('themes/edit/'.$theme->id)}}" class="btn btn-default">Edit</a>
+						<a href="{{URL::to('themes/delete/'.$theme->id)}}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
 					</td>
 				</tr>
 			@endforeach
@@ -24,4 +24,4 @@
 	</table>
 @endif
 
-<p><a class="btn success" href="{{URL::to('themes/create')}}">Create new Theme</a></p>
+<p><a class="btn btn-success" href="{{URL::to('themes/create')}}">Create new Theme</a></p>

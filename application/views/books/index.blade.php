@@ -1,7 +1,7 @@
 @if(count($books) == 0)
 	<p>No books.</p>
 @else
-	<table>
+	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>Title</th>
@@ -28,9 +28,9 @@
 					<td>{{$book->note}}</td>
 					<td>{{count($book->themes)}}</td>
 					<td>
-						<a href="{{URL::to('books/view/'.$book->id)}}" class="btn">View</a>
-						<a href="{{URL::to('books/edit/'.$book->id)}}" class="btn">Edit</a>
-						<a href="{{URL::to('books/delete/'.$book->id)}}" class="btn danger" onclick="return confirm('Are you sure?')">Delete</a>
+						<a href="{{URL::to('books/view/'.$book->id)}}" class="btn btn-default">View</a>
+						<a href="{{URL::to('books/edit/'.$book->id)}}" class="btn btn-default">Edit</a>
+						<a href="{{URL::to('books/delete/'.$book->id)}}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
 					</td>
 				</tr>
 			@endforeach
@@ -38,4 +38,4 @@
 	</table>
 @endif
 
-<p><a class="btn success" href="{{URL::to('books/create')}}">Create new Book</a></p>
+<p><a class="btn btn-success" href="{{URL::to('books/create')}}">Create new Book</a></p>

@@ -1,7 +1,7 @@
 @if(count($languages) == 0)
 	<p>No languages.</p>
 @else
-	<table>
+	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>Name</th>
@@ -14,9 +14,9 @@
 				<tr>
 					<td>{{$language->name}}</td>
 					<td>
-						<a href="{{URL::to('languages/view/'.$language->id)}}" class="btn">View</a>
-						<a href="{{URL::to('languages/edit/'.$language->id)}}" class="btn">Edit</a>
-						<a href="{{URL::to('languages/delete/'.$language->id)}}" class="btn danger" onclick="return confirm('Are you sure?')">Delete</a>
+						<a href="{{URL::to('languages/view/'.$language->id)}}" class="btn btn-default">View</a>
+						<a href="{{URL::to('languages/edit/'.$language->id)}}" class="btn btn-default">Edit</a>
+						<a href="{{URL::to('languages/delete/'.$language->id)}}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
 					</td>
 				</tr>
 			@endforeach
@@ -24,4 +24,4 @@
 	</table>
 @endif
 
-<p><a class="btn success" href="{{URL::to('languages/create')}}">Create new Language</a></p>
+<p><a class="btn btn-success" href="{{URL::to('languages/create')}}">Create new Language</a></p>

@@ -1,7 +1,7 @@
 <div class="span16">
 	<ul class="breadcrumb span6">
 		<li>
-			<a href="{{URL::to('translators')}}">Translators</a> <span class="divider">/</span>
+			<a href="{{URL::to('translators')}}">Translators</a> 
 		</li>
 		<li class="active">Viewing Translator</li>
 	</ul>
@@ -21,4 +21,4 @@
 	{{$translator->note}}
 </p>
 
-<p><a href="{{URL::to('translators/edit/'.$translator->id)}}" class="btn">Edit</a> <a href="{{URL::to('translators/delete/'.$translator->id)}}" class="btn danger" onclick="return confirm('Are you sure?')">Delete</a></p>
+<p><a href="{{URL::to('translators/edit/'.$translator->id)}}" class="btn btn-default">Edit</a> <a href="{{URL::to('translators/delete/'.$translator->id)}}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a></p>

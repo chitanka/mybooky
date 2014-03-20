@@ -1,7 +1,7 @@
 @if(count($contents) == 0)
 	<p>No contents.</p>
 @else
-	<table>
+	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>Book Id</th>
@@ -22,9 +22,9 @@
 					<td>{{$content->note}}</td>
 					<td>{{count($content->themes)}}</td>
 					<td>
-						<a href="{{URL::to('contents/view/'.$content->id)}}" class="btn">View</a>
-						<a href="{{URL::to('contents/edit/'.$content->id)}}" class="btn">Edit</a>
-						<a href="{{URL::to('contents/delete/'.$content->id)}}" class="btn danger" onclick="return confirm('Are you sure?')">Delete</a>
+						<a href="{{URL::to('contents/view/'.$content->id)}}" class="btn btn-default">View</a>
+						<a href="{{URL::to('contents/edit/'.$content->id)}}" class="btn btn-default">Edit</a>
+						<a href="{{URL::to('contents/delete/'.$content->id)}}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
 					</td>
 				</tr>
 			@endforeach
@@ -32,4 +32,4 @@
 	</table>
 @endif
 
-<p><a class="btn success" href="{{URL::to('contents/create')}}">Create new Content</a></p>
+<p><a class="btn btn-success" href="{{URL::to('contents/create')}}">Create new Content</a></p>

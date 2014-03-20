@@ -1,7 +1,7 @@
 <div class="span16">
 	<ul class="breadcrumb span6">
 		<li>
-			<a href="{{URL::to('books')}}">Books</a> <span class="divider">/</span>
+			<a href="{{URL::to('books')}}">Books</a> 
 		</li>
 		<li class="active">Viewing Book</li>
 	</ul>
@@ -37,13 +37,13 @@
 	{{$book->note}}
 </p>
 
-<p><a href="{{URL::to('books/edit/'.$book->id)}}" class="btn">Edit</a> <a href="{{URL::to('books/delete/'.$book->id)}}" class="btn danger" onclick="return confirm('Are you sure?')">Delete</a></p>
+<p><a href="{{URL::to('books/edit/'.$book->id)}}" class="btn btn-default">Edit</a> <a href="{{URL::to('books/delete/'.$book->id)}}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a></p>
 <h2>{{ __('admin.themes') }}</h2>
 
 @if(count($book->themes) == 0)
 	<p>No themes.</p>
 @else
-	<table>
+	<table class="table table-striped">
 		<thead>
 			<th>Name</th>
 			<th></th>
@@ -60,4 +60,4 @@
 	</table>
 @endif
 
-<p><a class="btn success" href="{{URL::to('themes/create/'.$book->id)}}">Create new theme</a></p>
+<p><a class="btn btn-success" href="{{URL::to('themes/create/'.$book->id)}}">Create new theme</a></p>

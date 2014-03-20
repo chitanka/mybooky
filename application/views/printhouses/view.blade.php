@@ -1,7 +1,7 @@
 <div class="span16">
 	<ul class="breadcrumb span6">
 		<li>
-			<a href="{{URL::to('printhouses')}}">Printhouses</a> <span class="divider">/</span>
+			<a href="{{URL::to('printhouses')}}">Printhouses</a> 
 		</li>
 		<li class="active">Viewing Printhouse</li>
 	</ul>
@@ -13,4 +13,4 @@
 	{{$printhouse->name}}
 </p>
 
-<p><a href="{{URL::to('printhouses/edit/'.$printhouse->id)}}" class="btn">Edit</a> <a href="{{URL::to('printhouses/delete/'.$printhouse->id)}}" class="btn danger" onclick="return confirm('Are you sure?')">Delete</a></p>
+<p><a href="{{URL::to('printhouses/edit/'.$printhouse->id)}}" class="btn btn-default">Edit</a> <a href="{{URL::to('printhouses/delete/'.$printhouse->id)}}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a></p>

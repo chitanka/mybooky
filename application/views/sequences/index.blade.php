@@ -1,7 +1,7 @@
 @if(count($sequences) == 0)
 	<p>No sequences.</p>
 @else
-	<table>
+	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>Name</th>
@@ -14,9 +14,9 @@
 				<tr>
 					<td>{{$sequence->name}}</td>
 					<td>
-						<a href="{{URL::to('sequences/view/'.$sequence->id)}}" class="btn">View</a>
-						<a href="{{URL::to('sequences/edit/'.$sequence->id)}}" class="btn">Edit</a>
-						<a href="{{URL::to('sequences/delete/'.$sequence->id)}}" class="btn danger" onclick="return confirm('Are you sure?')">Delete</a>
+						<a href="{{URL::to('sequences/view/'.$sequence->id)}}" class="btn btn-default">View</a>
+						<a href="{{URL::to('sequences/edit/'.$sequence->id)}}" class="btn btn-default">Edit</a>
+						<a href="{{URL::to('sequences/delete/'.$sequence->id)}}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
 					</td>
 				</tr>
 			@endforeach
@@ -24,4 +24,4 @@
 	</table>
 @endif
 
-<p><a class="btn success" href="{{URL::to('sequences/create')}}">Create new Sequence</a></p>
+<p><a class="btn btn-success" href="{{URL::to('sequences/create')}}">Create new Sequence</a></p>

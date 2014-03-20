@@ -1,10 +1,10 @@
 <div class="span16">
 	<ul class="breadcrumb span6">
 		<li>
-			<a href="{{URL::to('books/view/'.$content->book->id)}}">Book</a> <span class="divider">/</span>
+			<a href="{{URL::to('books/view/'.$content->book->id)}}">Book</a> 
 		</li>
 		<li>
-			<a href="{{URL::to('contents')}}">Contents</a> <span class="divider">/</span>
+			<a href="{{URL::to('contents')}}">Contents</a> 
 		</li>
 		<li class="active">Viewing Content</li>
 	</ul>
@@ -28,13 +28,13 @@
 	{{$content->note}}
 </p>
 
-<p><a href="{{URL::to('contents/edit/'.$content->id)}}" class="btn">Edit</a> <a href="{{URL::to('contents/delete/'.$content->id)}}" class="btn danger" onclick="return confirm('Are you sure?')">Delete</a></p>
+<p><a href="{{URL::to('contents/edit/'.$content->id)}}" class="btn btn-default">Edit</a> <a href="{{URL::to('contents/delete/'.$content->id)}}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a></p>
 <h2>Themes</h2>
 
 @if(count($content->themes) == 0)
 	<p>No themes.</p>
 @else
-	<table>
+	<table class="table table-striped">
 		<thead>
 			<th>Name</th>
 			<th></th>
@@ -51,4 +51,4 @@
 	</table>
 @endif
 
-<p><a class="btn success" href="{{URL::to('themes/create/'.$content->id)}}">Create new theme</a></p>
+<p><a class="btn btn-success" href="{{URL::to('themes/create/'.$content->id)}}">Create new theme</a></p>

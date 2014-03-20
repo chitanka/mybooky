@@ -1,7 +1,7 @@
 <div class="span16">
 	<ul class="breadcrumb span6">
 		<li>
-			<a href="{{URL::to('themes')}}">Themes</a> <span class="divider">/</span>
+			<a href="{{URL::to('themes')}}">Themes</a> 
 		</li>
 		<li class="active">New Theme</li>
 	</ul>
@@ -18,7 +18,7 @@
 		</div>
 
 		<div class="actions">
-			{{Form::submit('Save', array('class' => 'btn primary'))}}
+			{{Form::submit('Save', array('class' => 'btn btn-primary'))}}
 
 			or <a href="{{URL::to(Request::referrer())}}">Cancel</a>
 		</div>
