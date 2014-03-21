@@ -16,6 +16,10 @@ class Translator extends \Laravel\Database\Eloquent\Model {
 	 */
 	public static $timestamps = true;
 
+	public static function listsKeyValue() {
+		return self::lists('name', 'id');
+	}
+
 	public function books() {
 		return $this->has_many_and_belongs_to('Book', 'book_translator');
 	}

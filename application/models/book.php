@@ -66,6 +66,38 @@ class Book extends \Laravel\Database\Eloquent\Model {
 		return $this->has_many_and_belongs_to('Theme', 'book_theme');
 	}
 
+	public function set_authors($authorIds) {
+		$this->authors()->sync($authorIds);
+	}
+
+	public function set_translators($translatorIds) {
+		$this->authors()->sync($translatorIds);
+	}
+
+	public function set_compilers($compilerIds) {
+		$this->authors()->sync($compilerIds);
+	}
+
+	public function set_illustrators($illustratorIds) {
+		$this->authors()->sync($illustratorIds);
+	}
+
+	public function set_publishers($publisherIds) {
+		$this->authors()->sync($publisherIds);
+	}
+
+	public function set_printhouses($printhouseIds) {
+		$this->authors()->sync($printhouseIds);
+	}
+
+	public function set_themes($themeIds) {
+		$this->authors()->sync($themeIds);
+	}
+
+	public function set_languages($languageIds) {
+		$this->authors()->sync($languageIds);
+	}
+
 	public function __toString() {
 		return $this->title;
 	}

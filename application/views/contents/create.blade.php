@@ -1,22 +1,20 @@
-<div class="span16">
-	<ul class="breadcrumb span6">
-		<li>
-			<a href="{{URL::to('books')}}">Books</a> 
-		</li>
-		<li>
-			<a href="{{URL::to('contents')}}">Contents</a> 
-		</li>
-		<li class="active">New Content</li>
-	</ul>
-</div>
+<ul class="breadcrumb">
+	<li>
+		<a href="{{URL::to('books')}}">Books</a>
+	</li>
+	<li>
+		<a href="{{URL::to('contents')}}">Contents</a>
+	</li>
+	<li class="active">New Content</li>
+</ul>
 
 {{Form::open(null, 'post', array('class' => 'form-stacked span16'))}}
 	<fieldset>
 		<div class="clearfix">
-			{{Form::label('book', 'Book')}}
+			{{Form::label('book_id', 'Book')}}
 
 			<div class="input">
-				{{Form::select('book', $bookOptions, Input::old('book', $book), array('class' => 'span6'))}}
+				{{Form::select('book_id', $bookOptions, Input::old('book_id', $book_id), array('class' => 'span6'))}}
 			</div>
 		</div>
 		<div class="clearfix">

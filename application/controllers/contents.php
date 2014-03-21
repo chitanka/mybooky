@@ -16,14 +16,11 @@ class Contents_Controller extends Crud_Controller {
 
 	protected function view_params_create($book_id = null) {
 		return array(
-			'book' => $book_id,
+			'book_id' => $book_id,
 			'bookOptions' => array('') + Book::lists('title', 'id'),
 		);
 	}
 
-//	public function post_create(){
-//			$content->book_id = Input::get('book_id');
-//	}
 //	public function get_view($id){
 //		$content = Content::with(array('book', 'themes'))->find($id);
 //	}

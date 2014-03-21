@@ -1,4 +1,4 @@
-@if(count($contents) == 0)
+@if(count($objects) == 0)
 	<p>No contents.</p>
 @else
 	<table class="table table-striped">
@@ -14,7 +14,7 @@
 		</thead>
 
 		<tbody>
-			@foreach($contents as $content)
+			@foreach($objects as $content)
 				<tr>
 					<td><a href="{{URL::to('books/view/'.$content->id)}}">Book #{{$content->book_id}}</a></td>
 					<td>{{$content->idx}}</td>

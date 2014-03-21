@@ -1,10 +1,10 @@
 <div class="span16">
 	<ul class="breadcrumb span6">
 		<li>
-			<a href="{{URL::to('books/view/'.$content->book->id)}}">Book</a> 
+			<a href="{{URL::to('books/view/'.$object->book->id)}}">Book</a>
 		</li>
 		<li>
-			<a href="{{URL::to('contents')}}">Contents</a> 
+			<a href="{{URL::to('contents')}}">Contents</a>
 		</li>
 		<li class="active">Viewing Content</li>
 	</ul>
@@ -13,25 +13,25 @@
 <div class="span16">
 <p>
 	<strong>Book id:</strong>
-	{{$content->book_id}}
+	{{$object->book_id}}
 </p>
 <p>
 	<strong>Idx:</strong>
-	{{$content->idx}}
+	{{$object->idx}}
 </p>
 <p>
 	<strong>Title:</strong>
-	{{$content->title}}
+	{{$object->title}}
 </p>
 <p>
 	<strong>Note:</strong>
-	{{$content->note}}
+	{{$object->note}}
 </p>
 
-<p><a href="{{URL::to('contents/edit/'.$content->id)}}" class="btn btn-default">Edit</a> <a href="{{URL::to('contents/delete/'.$content->id)}}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a></p>
+<p><a href="{{URL::to('contents/edit/'.$object->id)}}" class="btn btn-default">Edit</a> <a href="{{URL::to('contents/delete/'.$object->id)}}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a></p>
 <h2>Themes</h2>
 
-@if(count($content->themes) == 0)
+@if(count($object->themes) == 0)
 	<p>No themes.</p>
 @else
 	<table class="table table-striped">
@@ -41,7 +41,7 @@
 		</thead>
 
 		<tbody>
-			@foreach($content->themes as $theme)
+			@foreach($object->themes as $theme)
 				<tr>
 					<td>{{$theme->name}}</td>
 					<td><a href="{{URL::to('themes/view/'.$theme->id)}}">View</a> <a href="{{URL::to('themes/edit/'.$theme->id)}}">Edit</a> <a href="{{URL::to('themes/delete/'.$theme->id)}}">Delete</a></td>
@@ -51,4 +51,4 @@
 	</table>
 @endif
 
-<p><a class="btn btn-success" href="{{URL::to('themes/create/'.$content->id)}}">Create new theme</a></p>
+<p><a class="btn btn-success" href="{{URL::to('themes/create/'.$object->id)}}">Create new theme</a></p>

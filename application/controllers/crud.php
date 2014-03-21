@@ -16,7 +16,9 @@ class Crud_Controller extends Base_Controller {
 	 */
 	public $restful = true;
 
+	/** Override in children controllers */
 	protected $formFields = array();
+	/** Override in children controllers */
 	protected $relations = array();
 
 	/**
@@ -24,24 +26,10 @@ class Crud_Controller extends Base_Controller {
 	 */
 	public function get_index() {
 		$controllerName = $this->controllerName();
-		$this->layout->title = Lang::line("admin.title_{$controllerName}_index");
+		$this->layout->title = Lang::line("admin.{$controllerName}_title_index");
 		$customView = "$controllerName.index";
 		$view = View::exists($customView) ? $customView : 'crud.index';
 		$this->layout->content = View::make($view)->with($this->view_params_index());
-	}
-
-	protected function view_params_index() {
-		$objects = $this->query()->with($this->withRelations)->get();
-		return array(
-			'objects' => $objects,
-			$this->plural => $objects, // just a backup till everything is converted to base CRUD
-			'fields' => $this->formFieldNames(),
-			'key' => $this->controllerName(),
-		);
-	}
-
-	protected function query_index() {
-		throw new Exception(sprintf("Override method %s in %s", __FUNCTION__, get_class($this)));
 	}
 
 	/**
@@ -49,42 +37,11 @@ class Crud_Controller extends Base_Controller {
 	 */
 	public function get_create() {
 		$controllerName = $this->controllerName();
-		$this->layout->title = Lang::line("admin.title_{$controllerName}_create");
+		$this->layout->title = Lang::line("admin.{$controllerName}_title_create");
 		$params = call_user_func_array(array($this, 'view_params_create'), func_get_args());
 		$customView = "$controllerName.create";
 		$view = View::exists($customView) ? $customView : 'crud.create';
 		$this->layout->content = View::make($view)->with($params);
-	}
-
-	protected function query() {
-		return new $this->model();
-	}
-
-	protected function view_params_create() {
-		return array(
-			'fields' => $this->formFieldNames(),
-			'key' => $this->controllerName(),
-		);
-	}
-
-	protected function formFields() {
-		return $this->formFields;
-	}
-
-	protected function formFieldNames() {
-		return array_keys($this->formFields());
-	}
-
-	protected function formFieldValidators() {
-		$validators = array();
-		foreach ($this->formFields() as $field => $fieldOptions) {
-			$validators[$field] = array_map('trim', explode(',', $fieldOptions[0]));
-		}
-		return $validators;
-	}
-
-	protected function relations() {
-		return $this->relations;
 	}
 
 	/**
@@ -96,26 +53,29 @@ class Crud_Controller extends Base_Controller {
 		$validation = Validator::make(Input::all(), $this->formFieldValidators());
 
 		$controllerName = $this->controllerName();
-		if ($validation->valid()) {
-			$object = new $this->model;
-
-			foreach ($this->formFieldNames() as $field) {
-				$object->$field = Input::get($field);
-			}
-			$object->save();
-			foreach ($this->relations() as $relation) {
-				$object->$relation()->sync(Input::get($relation));
-			}
-			$object->save();
-
-			Session::flash('message', Lang::line("admin.message_{$controllerName}_created", array('name' => $object)));
-
-			return Redirect::to($controllerName);
+		if (!$validation->valid()) {
+			return Redirect::to("$controllerName/create")
+				->with_errors($validation->errors)
+				->with_input();
 		}
+		$object = new $this->model;
 
-		return Redirect::to("$controllerName/create")
-			->with_errors($validation->errors)
-			->with_input();
+		$relations = array();
+		foreach ($this->formFieldNames() as $field) {
+			$value = Input::get($field);
+			if (is_array($value)) {
+				$relations[$field] = $value;
+			} else {
+				$object->$field = $value;
+			}
+		}
+		$object->save();
+		$object->fill($relations);
+		$object->save();
+
+		Session::flash('message', Lang::line("admin.{$controllerName}_message_created", array('name' => $object)));
+
+		return Redirect::to($controllerName);
 	}
 
 	/**
@@ -132,11 +92,13 @@ class Crud_Controller extends Base_Controller {
 			return Redirect::to($controllerName);
 		}
 
-		$this->layout->title = Lang::line("admin.title_{$controllerName}_view", array('name' => $object));
+		$this->layout->title = Lang::line("admin.{$controllerName}_title_view", array('name' => $object));
 		$customView = "$controllerName.view";
 		$view = View::exists($customView) ? $customView : 'crud.view';
 		$this->layout->content = View::make($view)->with(array(
-			$this->single => $object
+			'object' => $object,
+			'key' => $this->controllerName(),
+			'fields' => $this->formFieldNames(),
 		));
 	}
 
@@ -153,11 +115,12 @@ class Crud_Controller extends Base_Controller {
 		if ($object === null) {
 			return Redirect::to($controllerName);
 		}
-
-		$this->layout->title = Lang::line("admin.title_{$controllerName}_edit", array('name' => $object));
-		$this->layout->content = View::make("$controllerName.edit")->with(array(
-			$this->single => $object,
-		) + $this->view_params_create());
+		$this->layout->title = Lang::line("admin.{$controllerName}_title_edit", array('name' => $object));
+		$customView = "$controllerName.edit";
+		$view = View::exists($customView) ? $customView : 'crud.edit';
+		$this->layout->content = View::make($view)->with(array(
+			'object' => $object,
+		) + $this->view_params_edit());
 	}
 
 	/**
@@ -171,28 +134,24 @@ class Crud_Controller extends Base_Controller {
 
 		$controllerName = $this->controllerName();
 		if ($validation->valid()) {
-			$object = $this->query()->find($id);
+			return Redirect::to("$controllerName/edit/$id")
+				->with_errors($validation->errors)
+				->with_input();
+		}
+		$object = $this->query()->find($id);
 
-			if ($object === null) {
-				return Redirect::to($controllerName);
-			}
-
-			foreach ($this->formFieldNames() as $field) {
-				$object->$field = Input::get($field);
-			}
-			foreach ($this->relations() as $relation) {
-				$object->$relation()->sync(Input::get($relation));
-			}
-			$object->save();
-
-			Session::flash('message', Lang::line("admin.message_{$controllerName}_edited", array('name' => $object)));
-
+		if ($object === null) {
 			return Redirect::to($controllerName);
 		}
 
-		return Redirect::to("$controllerName/edit/$id")
-			->with_errors($validation->errors)
-			->with_input();
+		foreach ($this->formFieldNames() as $field) {
+			$object->$field = Input::get($field);
+		}
+		$object->save();
+
+		Session::flash('message', Lang::line("admin.{$controllerName}_message_edited", array('name' => $object)));
+
+		return Redirect::to($controllerName);
 	}
 
 	/**
@@ -205,13 +164,93 @@ class Crud_Controller extends Base_Controller {
 		$object = $this->query()->find($id);
 
 		$controllerName = $this->controllerName();
-		if ($object !== null) {
-			$object->delete();
-
-			Session::flash('message', Lang::line("admin.message_{$controllerName}_deleted", array('name' => $object)));
+		if ($object === null) {
+			return Redirect::to($controllerName);
 		}
+		$object->delete();
 
-		return Redirect::to($controllerName);
+		Session::flash('message', Lang::line("admin.{$controllerName}_message_deleted", array('name' => $object)));
+	}
+
+	protected function query_index() {
+		throw new Exception(sprintf("Override method %s in %s", __FUNCTION__, get_class($this)));
+	}
+
+	protected function query() {
+		return new $this->model();
+	}
+
+	protected function view_params_index() {
+		$objects = $this->query()->with($this->withRelations)->get();
+		return array(
+			'objects' => $objects,
+			'fields' => $this->formFieldNames(),
+			'key' => $this->controllerName(),
+		);
+	}
+
+	protected function view_params_create() {
+		return array(
+			'fields' => $this->formFieldOptions(),
+			'key' => $this->controllerName(),
+			'query' => $this->query(),
+		);
+	}
+
+	protected function view_params_edit() {
+		return $this->view_params_create();
+	}
+
+	protected function formFields() {
+		return $this->formFields;
+	}
+
+	protected function formFieldNames() {
+		$names = array();
+		foreach ($this->formFields() as $field => $fieldOptions) {
+			$names[] = is_numeric($field) ? $fieldOptions : $field;
+		}
+		return $names;
+	}
+
+	protected function formFieldOptions() {
+		$options = array();
+		$query = $this->query();
+		foreach ($this->formFields() as $field => $fieldOptions) {
+			if (is_numeric($field)) {
+				$field = $fieldOptions;
+				$fieldOptions = array();
+				$relation = $query->$field();
+				switch (get_class($relation)) {
+					case 'Laravel\Database\Eloquent\Relationships\Has_Many':
+					case 'Laravel\Database\Eloquent\Relationships\Has_Many_And_Belongs_To':
+					case 'Laravel\Database\Eloquent\Relationships\Belongs_To':
+						$fieldOptions['type'] = 'select';
+						$fieldOptions['multiple'] = strpos(get_class($relation), 'Has_Many') !== false;
+						$choices = $relation->model->listsKeyValue();
+						$fieldOptions['choices'] = ($fieldOptions['multiple'] ? array() : array('')) + $choices;
+						break;
+				}
+			}
+			if (!isset($fieldOptions['type'])) {
+				$fieldOptions['type'] = 'text';
+			}
+			$options[$field] = $fieldOptions;
+		}
+		return $options;
+	}
+
+	protected function formFieldValidators() {
+		$validators = array();
+		foreach ($this->formFields() as $field => $fieldOptions) {
+			$rawValidators = isset($fieldOptions['validators']) ? $fieldOptions['validators'] : $fieldOptions[0];
+			$validators[$field] = array_map('trim', explode(',', $rawValidators));
+		}
+		return $validators;
+	}
+
+	protected function relations() {
+		return $this->relations;
 	}
 
 	protected function controllerName() {

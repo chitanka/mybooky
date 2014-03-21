@@ -10,7 +10,10 @@ class Authors_Controller extends Crud_Controller {
 	protected $formFields = array(
 		'name' => array('required,max:100'),
 		'nickname' => array('max:50'),
-		'note' => array('max:200'),
+		'note' => array(
+			'validators' => 'max:200',
+			'type' => 'text',
+		),
 	);
 
 }

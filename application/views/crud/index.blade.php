@@ -1,11 +1,11 @@
 @if(count($objects) == 0)
-	<p class="no-items">{{ __('admin.message_'.$key.'_empty') }}</p>
+	<p class="no-items">{{ __('admin.'.$key.'.message_empty') }}</p>
 @else
 	<table class="table table-striped table-condensed">
 		<thead>
 			<tr>
 				@foreach($fields as $field)
-				<th>{{__('admin.field_'.$field)}}</th>
+				<th>{{ __('admin.field_'.$field) }}</th>
 				@endforeach
 				<th></th>
 			</tr>
@@ -15,12 +15,22 @@
 			@foreach($objects as $object)
 				<tr>
 					@foreach($fields as $field)
-					<td>{{$object->$field}}</td>
+					<td>
+						@if( is_array($object->$field) )
+							<ul class="list-inline">
+							@foreach($object->$field as $subfield)
+								<li>{{ $subfield }}</li>
+							@endforeach
+							</ul>
+						@else
+							{{ $object->$field }}
+						@endif
+					</td>
 					@endforeach
 					<td>
-						<a href="{{URL::to($key.'/view/'.$object->id)}}" class="btn btn-default btn-sm">{{ __('admin.action_view') }}</a>
-						<a href="{{URL::to($key.'/edit/'.$object->id)}}" class="btn btn-default btn-sm">{{ __('admin.action_edit') }}</a>
-						<a href="{{URL::to($key.'/delete/'.$object->id)}}" class="btn btn-danger btn-sm" onclick="return confirm('{{ __('admin.action_delete_confirm') }}')">{{ __('admin.action_delete') }}</a>
+						<a href="{{ URL::to($key.'/view/'.$object->id) }}" class="btn btn-default btn-sm">{{ __('admin.action_view') }}</a>
+						<a href="{{ URL::to($key.'/edit/'.$object->id) }}" class="btn btn-default btn-sm">{{ __('admin.action_edit') }}</a>
+						<a href="{{ URL::to($key.'/delete/'.$object->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('{{ __('admin.action_delete_confirm') }}')">{{ __('admin.action_delete') }}</a>
 					</td>
 				</tr>
 			@endforeach
@@ -28,4 +38,4 @@
 	</table>
 @endif
 
-<p><a class="btn btn-success" href="{{URL::to($key.'/create')}}">{{ __('admin.action_create_'.$key) }}</a></p>
+<p><a class="btn btn-success" href="{{ URL::to($key.'/create') }}">{{ __('admin.'.$key.'_action_create') }}</a></p>

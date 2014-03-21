@@ -16,13 +16,16 @@ class Content extends \Laravel\Database\Eloquent\Model {
 	 */
 	public static $timestamps = true;
 
+	public static function listsKeyValue() {
+		return self::lists('title', 'id');
+	}
+
 	/**
 	 * Establish the relationship between a content and a book.
 	 *
 	 * @return Laravel\Database\Eloquent\Relationships\Belongs_To
 	 */
-	public function book()
-	{
+	public function book() {
 		return $this->belongs_to('Book');
 	}
 
@@ -50,7 +53,6 @@ class Content extends \Laravel\Database\Eloquent\Model {
 	public function themes() {
 		return $this->has_many_and_belongs_to('Theme', 'content_theme');
 	}
-
 
 	public function __toString() {
 		return $this->title;

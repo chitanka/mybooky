@@ -3,31 +3,29 @@ class_exists('Crud_Controller') || require __DIR__.'/crud.php';
 
 class Books_Controller extends Crud_Controller {
 
-	protected $single = 'book';
-	protected $plural = 'books';
 	protected $model = 'Book';
 	protected $withRelations = array('sequence', 'themes');
 
 	protected $formFields = array(
-		'title' => array('required,max:100'),
+		'title' => array(
+			'validators' => 'required,max:100',
+			'type' => 'text',
+		),
+		'authors',
+		'translators',
+		'compilers',
+		'illustrators',
+		'languages',
+		'themes',
 		'edition' => array('max:30'),
 		'pub_date' => array('max:30'),
 		'volume' => array('integer'),
 		'pages' => array('integer'),
+		'sequence',
 		'seq_num' => array('integer'),
 		'note' => array('max:200'),
-	);
-	protected $relations = array(
-		'themes',
+		'publishers',
+		'printhouses',
 	);
 
-	protected function view_params_create() {
-		return array(
-			'themeOptions' => Theme::lists('name', 'id'),
-		) + parent::view_params_create();
-	}
-
-	/*
-				{{Form::select('themes[]', $themeOptions, Input::old('themes'), array('multiple', 'class' => 'span6 themes', 'placeholder' => 'Избор'))}}
-	 */
 }

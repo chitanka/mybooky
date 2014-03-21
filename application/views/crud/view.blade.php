@@ -1,16 +1,29 @@
-<div class="span16">
-	<ul class="breadcrumb span6">
-		<li>
-			<a href="{{URL::to('themes')}}">Themes</a> 
-		</li>
-		<li class="active">Viewing Theme</li>
-	</ul>
-</div>
+<ul class="breadcrumb">
+	<li>
+		<a href="{{ URL::to($key) }}">{{ __('admin.'.$key.'_title_index') }}</a>
+	</li>
+	<li class="active">{{ __('admin.'.$key.'_title_view', array('name' => $object)) }}</li>
+</ul>
 
-<div class="span16">
+
+<dl class="dl-horizontal">
+	@foreach($fields as $field)
+		<dt>{{ __('admin.field_'.$field) }}</dt>
+		<dd>
+			@if( is_array($object->$field) )
+				<ul class="list-inline">
+				@foreach($object->$field as $subfield)
+					<li>{{ $subfield }}</li>
+				@endforeach
+				</ul>
+			@else
+				{{ $object->$field }}&nbsp;
+			@endif
+		</dd>
+	@endforeach
+</dl>
+
 <p>
-	<strong>Name:</strong>
-	{{$theme->name}}
+	<a href="{{ URL::to($key.'/edit/'.$object->id) }}" class="btn btn-default">{{ __('admin.action_edit') }}</a>
+	<a href="{{ URL::to($key.'/delete/'.$object->id) }}" class="pull-right btn btn-danger" onclick="return confirm('{{ __('admin.action_delete_confirm') }}')">{{ __('admin.action_delete') }}</a>
 </p>
-
-<p><a href="{{URL::to('themes/edit/'.$theme->id)}}" class="btn btn-default">Edit</a> <a href="{{URL::to('themes/delete/'.$theme->id)}}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a></p>
