@@ -133,7 +133,7 @@
 'action_view' => 'Преглед',
 'action_edit' => 'Редактиране',
 'action_delete' => 'Изтриване',
-'action_confirm_delete' => 'Потвърдете изтриването!',
+'action_delete_confirm' => 'Потвърдете изтриването!',
 'action_save' => 'Запис',
 'action_cancel' => 'Отказ',
 );

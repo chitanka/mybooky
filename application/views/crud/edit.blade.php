@@ -25,8 +25,8 @@
 
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
-			{{ Form::submit(__('admin.action_save'), array('class' => 'btn btn-primary')) }}
-			<a class="pull-right btn btn-default" href="{{ URL::to(Request::referrer()) }}">{{ __('admin.action_cancel') }}</a>
+			<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> {{ __('admin.action_save') }}</button>
+			<a class="pull-right btn btn-default" href="{{ URL::to(Request::referrer()) }}"><span class="glyphicon glyphicon-arrow-left"></span> {{ __('admin.action_cancel') }}</a>
 		</div>
 	</div>
 {{ Form::close() }}
