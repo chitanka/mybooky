@@ -1,5 +1,5 @@
 @if(count($objects) == 0)
-	<p class="no-items">{{ __('admin.'.$key.'.message_empty') }}</p>
+	<p class="no-items">{{ __('admin.'.$key.'_message_empty') }}</p>
 @else
 	<table class="table table-striped table-condensed">
 		<thead>

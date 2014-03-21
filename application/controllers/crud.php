@@ -164,12 +164,12 @@ class Crud_Controller extends Base_Controller {
 		$object = $this->query()->find($id);
 
 		$controllerName = $this->controllerName();
-		if ($object === null) {
-			return Redirect::to($controllerName);
-		}
-		$object->delete();
+		if ($object !== null) {
+			$object->delete();
 
-		Session::flash('message', Lang::line("admin.{$controllerName}_message_deleted", array('name' => $object)));
+			Session::flash('message', Lang::line("admin.{$controllerName}_message_deleted", array('name' => $object)));
+		}
+		return Redirect::to($controllerName);
 	}
 
 	protected function query_index() {
