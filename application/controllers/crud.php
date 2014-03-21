@@ -53,7 +53,7 @@ class Crud_Controller extends Base_Controller {
 		$validation = Validator::make(Input::all(), $this->formFieldValidators());
 
 		$controllerName = $this->controllerName();
-		if (!$validation->valid()) {
+		if ($validation->fails()) {
 			return Redirect::to("$controllerName/create")
 				->with_errors($validation->errors)
 				->with_input();
@@ -133,7 +133,7 @@ class Crud_Controller extends Base_Controller {
 		$validation = Validator::make(Input::all(), $this->formFieldValidators());
 
 		$controllerName = $this->controllerName();
-		if ($validation->valid()) {
+		if ($validation->fails()) {
 			return Redirect::to("$controllerName/edit/$id")
 				->with_errors($validation->errors)
 				->with_input();

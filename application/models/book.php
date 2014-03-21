@@ -71,31 +71,37 @@ class Book extends \Laravel\Database\Eloquent\Model {
 	}
 
 	public function set_translators($translatorIds) {
-		$this->authors()->sync($translatorIds);
+		$this->translators()->sync($translatorIds);
 	}
 
 	public function set_compilers($compilerIds) {
-		$this->authors()->sync($compilerIds);
+		$this->compilers()->sync($compilerIds);
 	}
 
 	public function set_illustrators($illustratorIds) {
-		$this->authors()->sync($illustratorIds);
+		$this->illustrators()->sync($illustratorIds);
 	}
 
 	public function set_publishers($publisherIds) {
-		$this->authors()->sync($publisherIds);
+		$this->publishers()->sync($publisherIds);
 	}
 
 	public function set_printhouses($printhouseIds) {
-		$this->authors()->sync($printhouseIds);
+		$this->printhouses()->sync($printhouseIds);
 	}
 
 	public function set_themes($themeIds) {
-		$this->authors()->sync($themeIds);
+		$this->themes()->sync($themeIds);
 	}
 
 	public function set_languages($languageIds) {
-		$this->authors()->sync($languageIds);
+		$this->languages()->sync($languageIds);
+	}
+
+	public function set_sequence($sequence) {
+		if (is_numeric($sequence)) {
+			$this->sequence_id = $sequence;
+		}
 	}
 
 	public function __toString() {

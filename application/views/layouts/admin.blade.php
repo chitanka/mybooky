@@ -11,8 +11,6 @@
 @endsection
 
 @section('content')
-	<div class="row">
-		<div class="span16">
 			<h1>{{ $title }}</h1>
 			<hr>
 
@@ -29,11 +27,7 @@
 					@endforeach
 				</div>
 			@endif
-		</div>
-		<div class="span16">
 			{{ $content }}
-		</div>
-	</div>
 @endsection
 
 @section('scripts')

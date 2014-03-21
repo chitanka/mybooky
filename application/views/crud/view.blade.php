@@ -12,9 +12,11 @@
 		<dd>
 			@if( is_array($object->$field) )
 				<ul class="list-inline">
-				@foreach($object->$field as $subfield)
+				@forelse($object->$field as $subfield)
 					<li>{{ $subfield }}</li>
-				@endforeach
+				@empty
+					<li>&nbsp;</li>
+				@endforelse
 				</ul>
 			@else
 				{{ $object->$field }}&nbsp;

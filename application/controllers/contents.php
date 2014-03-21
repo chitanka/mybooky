@@ -3,8 +3,6 @@ class_exists('Crud_Controller') || require __DIR__.'/crud.php';
 
 class Contents_Controller extends Crud_Controller {
 
-	protected $single = 'content';
-	protected $plural = 'contents';
 	protected $model = 'Content';
 
 	protected $formFields = array(

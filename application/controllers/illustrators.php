@@ -3,8 +3,6 @@ class_exists('Crud_Controller') || require __DIR__.'/crud.php';
 
 class Illustrators_Controller extends Crud_Controller {
 
-	protected $single = 'illustrator';
-	protected $plural = 'illustrators';
 	protected $model = 'Illustrator';
 
 	protected $formFields = array(

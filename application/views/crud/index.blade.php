@@ -18,10 +18,12 @@
 					<td>
 						@if( is_array($object->$field) )
 							<ul class="list-inline">
-							@foreach($object->$field as $subfield)
-								<li>{{ $subfield }}</li>
+							@foreach($object->$field as $relObject)
+								<li><a href="{{ URL::to($field.'/view/'.$relObject->id) }}">{{ $relObject }}</a></li>
 							@endforeach
 							</ul>
+						@elseif ( is_object($object->$field) )
+							<a href="{{ URL::to($field.'s/view/'.$object->$field->id) }}">{{ $object->$field }}</a>
 						@else
 							{{ $object->$field }}
 						@endif

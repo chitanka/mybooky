@@ -3,8 +3,6 @@ class_exists('Crud_Controller') || require __DIR__.'/crud.php';
 
 class Compilers_Controller extends Crud_Controller {
 
-	protected $single = 'compiler';
-	protected $plural = 'compilers';
 	protected $model = 'Compiler';
 
 	protected $formFields = array(
