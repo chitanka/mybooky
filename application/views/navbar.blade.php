@@ -26,8 +26,6 @@
 							<ul class="dropdown-menu">
 								<li>{{ HTML::link('publishers', __('admin.title_publishers_index')) }}</li>
 								<li>{{ HTML::link('printhouses', __('admin.title_printhouses_index')) }}</li>
-								<li>{{ HTML::link('sequences', __('admin.title_sequences_index')) }}</li>
-								<li>{{ HTML::link('themes', __('admin.title_themes_index')) }}</li>
 							</ul>
 						</li>
 						<li class="dropdown">

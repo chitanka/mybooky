@@ -24,7 +24,10 @@ class Books_Controller extends Crud_Controller {
 	protected function view_params_create() {
 		return array(
 			'themeOptions' => Theme::lists('name', 'id'),
-		);
+		) + parent::view_params_create();
 	}
 
+	/*
+				{{Form::select('themes[]', $themeOptions, Input::old('themes'), array('multiple', 'class' => 'span6 themes', 'placeholder' => 'Избор'))}}
+	 */
 }

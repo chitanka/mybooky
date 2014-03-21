@@ -3,7 +3,7 @@
 		<li>
 			<a href="{{URL::to('themes')}}">Themes</a> 
 		</li>
-		<li class="active">New Theme</li>
+		<li class="active">Editing Theme</li>
 	</ul>
 </div>
 
@@ -13,7 +13,7 @@
 			{{Form::label('name', 'Name')}}
 
 			<div class="input">
-				{{Form::text('name', Input::old('name'), array('class' => 'span6'))}}
+				{{Form::text('name', Input::old('name', $theme->name), array('class' => 'span6'))}}
 			</div>
 		</div>
 

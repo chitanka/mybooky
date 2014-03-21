@@ -25,12 +25,18 @@ class Crud_Controller extends Base_Controller {
 	public function get_index() {
 		$controllerName = $this->controllerName();
 		$this->layout->title = Lang::line("admin.title_{$controllerName}_index");
-		$this->layout->content = View::make("$controllerName.index")->with($this->view_params_index());
+		$customView = "$controllerName.index";
+		$view = View::exists($customView) ? $customView : 'crud.index';
+		$this->layout->content = View::make($view)->with($this->view_params_index());
 	}
 
 	protected function view_params_index() {
+		$objects = $this->query()->with($this->withRelations)->get();
 		return array(
-			$this->plural => $this->query()->with($this->withRelations)->get()
+			'objects' => $objects,
+			$this->plural => $objects, // just a backup till everything is converted to base CRUD
+			'fields' => $this->formFieldNames(),
+			'key' => $this->controllerName(),
 		);
 	}
 
@@ -45,7 +51,9 @@ class Crud_Controller extends Base_Controller {
 		$controllerName = $this->controllerName();
 		$this->layout->title = Lang::line("admin.title_{$controllerName}_create");
 		$params = call_user_func_array(array($this, 'view_params_create'), func_get_args());
-		$this->layout->content = View::make("$controllerName.create")->with($params);
+		$customView = "$controllerName.create";
+		$view = View::exists($customView) ? $customView : 'crud.create';
+		$this->layout->content = View::make($view)->with($params);
 	}
 
 	protected function query() {
@@ -53,7 +61,10 @@ class Crud_Controller extends Base_Controller {
 	}
 
 	protected function view_params_create() {
-		return array();
+		return array(
+			'fields' => $this->formFieldNames(),
+			'key' => $this->controllerName(),
+		);
 	}
 
 	protected function formFields() {
@@ -122,7 +133,9 @@ class Crud_Controller extends Base_Controller {
 		}
 
 		$this->layout->title = Lang::line("admin.title_{$controllerName}_view", array('name' => $object));
-		$this->layout->content = View::make("$controllerName.view")->with(array(
+		$customView = "$controllerName.view";
+		$view = View::exists($customView) ? $customView : 'crud.view';
+		$this->layout->content = View::make($view)->with(array(
 			$this->single => $object
 		));
 	}
