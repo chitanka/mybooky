@@ -4,8 +4,10 @@
 	<table class="table table-striped table-condensed">
 		<thead>
 			<tr>
-				@foreach($fields as $field)
-				<th>{{ __('admin.field_'.$field) }}</th>
+				@foreach($fields as $field => $options)
+				@if( $options['index'] )
+					<th>{{ __('admin.field_'.$field) }}</th>
+				@endif
 				@endforeach
 				<th></th>
 			</tr>
@@ -14,20 +16,22 @@
 		<tbody>
 			@foreach($objects as $object)
 				<tr>
-					@foreach($fields as $field)
-					<td>
-						@if( is_array($object->$field) )
-							<ul class="list-inline">
-							@foreach($object->$field as $relObject)
-								<li><a href="{{ URL::to($field.'/view/'.$relObject->id) }}">{{ $relObject }}</a></li>
-							@endforeach
-							</ul>
-						@elseif ( is_object($object->$field) )
-							<a href="{{ URL::to($field.'s/view/'.$object->$field->id) }}">{{ $object->$field }}</a>
-						@else
-							{{ $object->$field }}
-						@endif
-					</td>
+					@foreach($fields as $field => $options)
+					@if( $options['index'] )
+						<td>
+							@if( is_array($object->$field) )
+								<ul class="list-inline">
+								@foreach($object->$field as $relObject)
+									<li><a href="{{ URL::to($field.'/view/'.$relObject->id) }}">{{ $relObject }}</a></li>
+								@endforeach
+								</ul>
+							@elseif ( is_object($object->$field) )
+								<a href="{{ URL::to($field.'s/view/'.$object->$field->id) }}">{{ $object->$field }}</a>
+							@else
+								{{ $object->$field }}
+							@endif
+						</td>
+					@endif
 					@endforeach
 					<td>
 						<a href="{{ URL::to($key.'/view/'.$object->id) }}" class="btn btn-default btn-sm" title="{{ __('admin.action_view') }}"><span class="glyphicon glyphicon-search"></span></a>

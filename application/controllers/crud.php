@@ -61,7 +61,7 @@ class Crud_Controller extends Base_Controller {
 		$object = new $this->model;
 
 		$relations = array();
-		foreach ($this->formFieldNames() as $field) {
+		foreach ($this->fieldNames() as $field) {
 			$value = Input::get($field);
 			if (is_array($value)) {
 				$relations[$field] = $value;
@@ -98,7 +98,7 @@ class Crud_Controller extends Base_Controller {
 		$this->layout->content = View::make($view)->with(array(
 			'object' => $object,
 			'key' => $this->controllerName(),
-			'fields' => $this->formFieldNames(),
+			'fields' => $this->fieldNames(),
 		));
 	}
 
@@ -144,7 +144,7 @@ class Crud_Controller extends Base_Controller {
 			return Redirect::to($controllerName);
 		}
 
-		foreach ($this->formFieldNames() as $field) {
+		foreach ($this->fieldNames() as $field) {
 			$object->$field = Input::get($field);
 		}
 		$object->save();
@@ -184,14 +184,14 @@ class Crud_Controller extends Base_Controller {
 		$objects = $this->query()->with($this->withRelations)->get();
 		return array(
 			'objects' => $objects,
-			'fields' => $this->formFieldNames(),
+			'fields' => $this->fieldsForIndex(),
 			'key' => $this->controllerName(),
 		);
 	}
 
 	protected function view_params_create() {
 		return array(
-			'fields' => $this->formFieldOptions(),
+			'fields' => $this->fieldsForForm(),
 			'key' => $this->controllerName(),
 			'query' => $this->query(),
 		);
@@ -205,7 +205,7 @@ class Crud_Controller extends Base_Controller {
 		return $this->formFields;
 	}
 
-	protected function formFieldNames() {
+	protected function fieldNames() {
 		$names = array();
 		foreach ($this->formFields() as $field => $fieldOptions) {
 			$names[] = is_numeric($field) ? $fieldOptions : $field;
@@ -213,7 +213,22 @@ class Crud_Controller extends Base_Controller {
 		return $names;
 	}
 
-	protected function formFieldOptions() {
+	protected function fieldsForIndex() {
+		$names = array();
+		foreach ($this->formFields() as $field => $fieldOptions) {
+			if (is_numeric($field)) {
+				$field = $fieldOptions;
+				$fieldOptions = array();
+			}
+			if (!isset($fieldOptions['index'])) {
+				$fieldOptions['index'] = true;
+			}
+			$names[$field] = $fieldOptions;
+		}
+		return $names;
+	}
+
+	protected function fieldsForForm() {
 		$options = array();
 		$query = $this->query();
 		foreach ($this->formFields() as $field => $fieldOptions) {
@@ -235,6 +250,11 @@ class Crud_Controller extends Base_Controller {
 			if (!isset($fieldOptions['type'])) {
 				$fieldOptions['type'] = 'text';
 			}
+			foreach (array('create', 'edit') as $action) {
+				if (!isset($fieldOptions[$action])) {
+					$fieldOptions[$action] = true;
+				}
+			}
 			$options[$field] = $fieldOptions;
 		}
 		return $options;
@@ -243,8 +263,9 @@ class Crud_Controller extends Base_Controller {
 	protected function formFieldValidators() {
 		$validators = array();
 		foreach ($this->formFields() as $field => $fieldOptions) {
-			$rawValidators = isset($fieldOptions['validators']) ? $fieldOptions['validators'] : $fieldOptions[0];
-			$validators[$field] = array_map('trim', explode(',', $rawValidators));
+			if (isset($fieldOptions['validators'])) {
+				$validators[$field] = array_map('trim', explode(',', $fieldOptions['validators']));
+			}
 		}
 		return $validators;
 	}

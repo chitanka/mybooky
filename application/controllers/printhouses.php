@@ -6,6 +6,6 @@ class Printhouses_Controller extends Crud_Controller {
 	protected $model = 'Printhouse';
 
 	protected $formFields = array(
-		'name' => array('required,max:100'),
+		'name' => array('validators' => 'required,max:100'),
 	);
 }

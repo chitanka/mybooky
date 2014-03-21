@@ -6,6 +6,6 @@ class Sequences_Controller extends Crud_Controller {
 	protected $model = 'Sequence';
 
 	protected $formFields = array(
-		'name' => array('required,max:100'),
+		'name' => array('validators' => 'required,max:100'),
 	);
 }

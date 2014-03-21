@@ -6,7 +6,7 @@ class Themes_Controller extends Crud_Controller {
 	protected $model = 'Theme';
 
 	protected $formFields = array(
-		'name' => array('required,max:50'),
+		'name' => array('validators' => 'required,max:50'),
 	);
 
 }

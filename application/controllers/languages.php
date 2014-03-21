@@ -6,6 +6,6 @@ class Languages_Controller extends Crud_Controller {
 	protected $model = 'Language';
 
 	protected $formFields = array(
-		'name' => array('required,max:30'),
+		'name' => array('validators' => 'required,max:30'),
 	);
 }

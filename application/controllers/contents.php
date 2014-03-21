@@ -6,10 +6,10 @@ class Contents_Controller extends Crud_Controller {
 	protected $model = 'Content';
 
 	protected $formFields = array(
-		'book_id' => array('required,integer'),
-		'idx' => array('required,integer'),
-		'title' => array('required,max:100'),
-		'note' => array('max:200'),
+		'book_id' => array('validators' => 'required,integer'),
+		'idx' => array('validators' => 'required,integer'),
+		'title' => array('validators' => 'required,max:100'),
+		'note' => array('validators' => 'max:200'),
 	);
 
 	protected function view_params_create($book_id = null) {
