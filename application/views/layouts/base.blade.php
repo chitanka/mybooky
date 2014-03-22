@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width">
 	<title>
 		@section('title')
-			MyBooky
+			{{ Config::get('application.sitename') }}
 		@endsection
 		@yield('title')
 	</title>
@@ -19,7 +19,10 @@
 </head>
 <body>
 	<div class="container">
-		<?php echo render('navbar') ?>
+		@section('navbar')
+			<?php echo render('navbar') ?>
+		@endsection
+		@yield('navbar')
 		@yield('content')
 	</div>
 	@section('scripts')

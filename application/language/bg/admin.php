@@ -110,6 +110,9 @@
 'languages_action_create' => 'Нов език',
 'languages_message_empty' => 'Няма езици',
 
+'persons_title_index' => 'Личности',
+'secondary_title_index' => 'Допълнителни',
+
 'field_name' => 'Име',
 'field_nickname' => 'Псевдоним',
 'field_note' => 'Бележка',

@@ -196,4 +196,12 @@ return array(
 		'View'       	=> 'Laravel\\View',
 	),
 
+	'sitename' => 'Моите книги',
+
+	'menu' => array(
+		'books',
+		'contents',
+		'persons' => array('authors', 'translators', 'compilers', 'illustrators'),
+		'secondary' => array('publishers', 'printhouses', 'sequences', 'themes', 'languages'),
+	),
 );
