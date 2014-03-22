@@ -235,6 +235,8 @@ class Crud_Controller extends Base_Controller {
 			if (is_numeric($field)) {
 				$field = $fieldOptions;
 				$fieldOptions = array();
+			}
+			if (method_exists($query, $field)) {
 				$relation = $query->$field();
 				switch (get_class($relation)) {
 					case 'Laravel\Database\Eloquent\Relationships\Has_Many':

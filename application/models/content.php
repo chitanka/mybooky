@@ -54,6 +54,12 @@ class Content extends \Laravel\Database\Eloquent\Model {
 		return $this->has_many_and_belongs_to('Theme', 'content_theme');
 	}
 
+	public function set_book($book) {
+		if (is_numeric($book)) {
+			$this->book_id = $book;
+		}
+	}
+
 	public function __toString() {
 		return $this->title;
 	}

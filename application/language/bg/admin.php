@@ -129,6 +129,7 @@
 'field_printhouses' => 'Печатници',
 'field_languages' => 'Езици',
 'field_contents' => 'Произведения',
+'field_book' => 'Книга',
 'field_idx' => 'Номер',
 'action_view' => 'Преглед',
 'action_edit' => 'Редактиране',
@@ -136,4 +137,5 @@
 'action_delete_confirm' => 'Потвърдете изтриването!',
 'action_save' => 'Запис',
 'action_cancel' => 'Отказ',
+'action_list' => 'Към списъка',
 );

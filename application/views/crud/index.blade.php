@@ -45,5 +45,5 @@
 @endif
 
 <p>
-	<a class="btn btn-success" href="{{ URL::to($key.'/create') }}"><span class="glyphicon glyphicon-star"></span> {{ __('admin.'.$key.'_action_create') }}</a>
+	<a class="btn btn-success" href="{{ URL::to($key.'/create') }}"><span class="glyphicon glyphicon-plus"></span> {{ __('admin.'.$key.'_action_create') }}</a>
 </p>

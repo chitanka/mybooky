@@ -16,6 +16,10 @@ class Book extends \Laravel\Database\Eloquent\Model {
 	 */
 	public static $timestamps = true;
 
+	public static function listsKeyValue() {
+		return self::lists('title', 'id');
+	}
+
 	/**
 	 * Establish the relationship between a book and a sequence.
 	 *
