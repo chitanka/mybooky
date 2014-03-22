@@ -34,9 +34,9 @@
 					@endif
 					@endforeach
 					<td>
-						<a href="{{ URL::to($key.'/view/'.$object->id) }}" class="btn btn-default btn-sm" title="{{ __('admin.action_view') }}"><span class="glyphicon glyphicon-search"></span></a>
-						<a href="{{ URL::to($key.'/edit/'.$object->id) }}" class="btn btn-default btn-sm" title="{{ __('admin.action_edit') }}"><span class="glyphicon glyphicon-pencil"></span></a>
-						<a href="{{ URL::to($key.'/delete/'.$object->id) }}" class="delete btn btn-danger btn-sm" onclick="return confirm('{{ __('admin.action_delete_confirm') }}')" title="{{ __('admin.action_delete') }}"><span class="glyphicon glyphicon-remove"></span></a>
+						<a href="{{ URL::to($key.'/view/'.$object->id) }}" class="btn btn-default btn-xs" title="{{ __('admin.action_view') }}"><span class="glyphicon glyphicon-search"></span></a>
+						<a href="{{ URL::to($key.'/edit/'.$object->id) }}" class="btn btn-default btn-xs" title="{{ __('admin.action_edit') }}"><span class="glyphicon glyphicon-pencil"></span></a>
+						<a href="{{ URL::to($key.'/delete/'.$object->id) }}" class="delete btn btn-danger btn-xs" onclick="return confirm('{{ __('admin.action_delete_confirm') }}')" title="{{ __('admin.action_delete') }}"><span class="glyphicon glyphicon-remove"></span></a>
 					</td>
 				</tr>
 			@endforeach

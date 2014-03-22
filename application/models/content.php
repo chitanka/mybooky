@@ -60,6 +60,26 @@ class Content extends \Laravel\Database\Eloquent\Model {
 		}
 	}
 
+	public function set_authors($authorIds) {
+		$this->authors()->sync($authorIds);
+	}
+
+	public function set_translators($translatorIds) {
+		$this->translators()->sync($translatorIds);
+	}
+
+	public function set_illustrators($illustratorIds) {
+		$this->illustrators()->sync($illustratorIds);
+	}
+
+	public function set_themes($themeIds) {
+		$this->themes()->sync($themeIds);
+	}
+
+	public function set_languages($languageIds) {
+		$this->languages()->sync($languageIds);
+	}
+
 	public function __toString() {
 		return $this->title;
 	}
