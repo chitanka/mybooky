@@ -25,6 +25,12 @@
 				@endif
 			@endforeach
 			</ul>
+			<form action="{{ URL::to('search') }}" class="navbar-form navbar-right" role="search">
+				<div class="form-group">
+					<input name="query" type="text" class="form-control" placeholder="Търсене">
+				</div>
+			</form>
 		</div><!--/.nav-collapse -->
+
 	</div><!--/.container-fluid -->
 </div>
