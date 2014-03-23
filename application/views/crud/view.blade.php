@@ -12,12 +12,14 @@
 		<dd>
 			@if( is_array($object->$field) )
 				<ul class="list-inline">
-				@forelse($object->$field as $subfield)
-					<li>{{ $subfield }}</li>
+				@forelse($object->$field as $relObject)
+					<li><a href="{{ URL::to($field.'/view/'.$relObject->id) }}">{{ $relObject }}</a></li>
 				@empty
 					<li>&nbsp;</li>
 				@endforelse
 				</ul>
+			@elseif ( is_object($object->$field) )
+				<a href="{{ URL::to($field.'s/view/'.$object->$field->id) }}">{{ $object->$field }}</a>
 			@else
 				{{ $object->$field }}&nbsp;
 			@endif
