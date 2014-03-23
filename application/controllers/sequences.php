@@ -7,5 +7,8 @@ class Sequences_Controller extends Crud_Controller {
 
 	protected $formFields = array(
 		'name' => array('validators' => 'required,max:100'),
+		'books' => array(
+			'index' => false
+		),
 	);
 }

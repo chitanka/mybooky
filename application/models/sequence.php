@@ -24,6 +24,10 @@ class Sequence extends \Laravel\Database\Eloquent\Model {
 		return $this->has_many('Book');
 	}
 
+	public function set_books($bookIds) {
+		$this->books()->sync($bookIds);
+	}
+
 	public function __toString() {
 		return $this->name;
 	}

@@ -7,5 +7,11 @@ class Languages_Controller extends Crud_Controller {
 
 	protected $formFields = array(
 		'name' => array('validators' => 'required,max:30'),
+		'books' => array(
+			'index' => false
+		),
+		'contents' => array(
+			'index' => false
+		),
 	);
 }

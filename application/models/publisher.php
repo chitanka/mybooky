@@ -24,6 +24,10 @@ class Publisher extends \Laravel\Database\Eloquent\Model {
 		return $this->has_many_and_belongs_to('Book', 'book_publisher');
 	}
 
+	public function set_books($bookIds) {
+		$this->books()->sync($bookIds);
+	}
+
 	public function __toString() {
 		return $this->name;
 	}

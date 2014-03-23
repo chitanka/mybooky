@@ -28,6 +28,14 @@ class Illustrator extends \Laravel\Database\Eloquent\Model {
 		return $this->has_many_and_belongs_to('Content', 'content_illustrator');
 	}
 
+	public function set_books($bookIds) {
+		$this->books()->sync($bookIds);
+	}
+
+	public function set_contents($contentIds) {
+		$this->contents()->sync($contentIds);
+	}
+
 	public function __toString() {
 		return $this->name;
 	}

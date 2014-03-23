@@ -12,6 +12,12 @@ class Authors_Controller extends Crud_Controller {
 			'validators' => 'max:200',
 			'type' => 'text',
 		),
+		'books' => array(
+			'index' => false
+		),
+		'contents' => array(
+			'index' => false
+		),
 	);
 
 }
