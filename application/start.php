@@ -60,6 +60,7 @@ Laravel\Autoloader::$aliases = $aliases;
 
 Autoloader::map(array(
 	'Base_Controller' => path('app').'controllers/base.php',
+	'Crud_Controller' => path('app').'controllers/crud.php',
 ));
 
 /*
@@ -76,6 +77,10 @@ Autoloader::map(array(
 Autoloader::directories(array(
 	path('app').'models',
 	path('app').'libraries',
+));
+
+Autoloader::namespaces(array(
+	'Application' => path('app'),
 ));
 
 /*

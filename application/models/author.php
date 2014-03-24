@@ -1,6 +1,6 @@
 <?php
 
-class Author extends \Laravel\Database\Eloquent\Model {
+class Author extends Model {
 
 	/**
 	 * The name of the table associated with the model.
@@ -8,17 +8,6 @@ class Author extends \Laravel\Database\Eloquent\Model {
 	 * @var string
 	 */
 	public static $table = 'authors';
-
-	/**
-	 * Indicates if the model has update and creation timestamps.
-	 *
-	 * @var bool
-	 */
-	public static $timestamps = true;
-
-	public static function listsKeyValue() {
-		return self::lists('name', 'id');
-	}
 
 	public function books() {
 		return $this->has_many_and_belongs_to('Book', 'book_author');
@@ -36,7 +25,4 @@ class Author extends \Laravel\Database\Eloquent\Model {
 		$this->contents()->sync($contentIds);
 	}
 
-	public function __toString() {
-		return $this->name;
-	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-class Content extends \Laravel\Database\Eloquent\Model {
+class Content extends Model {
 
 	/**
 	 * The name of the table associated with the model.
@@ -10,15 +10,9 @@ class Content extends \Laravel\Database\Eloquent\Model {
 	public static $table = 'contents';
 
 	/**
-	 * Indicates if the model has update and creation timestamps.
-	 *
-	 * @var bool
+	 * The field name used to represent this object in a string context, i.e. __toString()
 	 */
-	public static $timestamps = true;
-
-	public static function listsKeyValue() {
-		return self::lists('title', 'id');
-	}
+	protected static $nameField = 'title';
 
 	/**
 	 * Establish the relationship between a content and a book.
@@ -78,9 +72,5 @@ class Content extends \Laravel\Database\Eloquent\Model {
 
 	public function set_languages($languageIds) {
 		$this->languages()->sync($languageIds);
-	}
-
-	public function __toString() {
-		return $this->title;
 	}
 }

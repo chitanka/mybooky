@@ -1,6 +1,6 @@
 <?php
 
-class Book extends \Laravel\Database\Eloquent\Model {
+class Book extends Model {
 
 	/**
 	 * The name of the table associated with the model.
@@ -10,15 +10,9 @@ class Book extends \Laravel\Database\Eloquent\Model {
 	public static $table = 'books';
 
 	/**
-	 * Indicates if the model has update and creation timestamps.
-	 *
-	 * @var bool
+	 * The field name used to represent this object in a string context, i.e. __toString()
 	 */
-	public static $timestamps = true;
-
-	public static function listsKeyValue() {
-		return self::lists('title', 'id');
-	}
+	protected static $nameField = 'title';
 
 	/**
 	 * Establish the relationship between a book and a sequence.
@@ -106,9 +100,5 @@ class Book extends \Laravel\Database\Eloquent\Model {
 		if (is_numeric($sequence)) {
 			$this->sequence_id = $sequence;
 		}
-	}
-
-	public function __toString() {
-		return $this->title;
 	}
 }
