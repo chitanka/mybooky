@@ -27,12 +27,12 @@ class CrudGenerator {
 	}
 
 	public function formFields() {
-		return $this->config();
+		return $this->config()['fields'];
 	}
 
 	public function fieldNames() {
 		$names = array();
-		foreach ($this->config() as $field => $fieldOptions) {
+		foreach ($this->formFields() as $field => $fieldOptions) {
 			$names[] = is_numeric($field) ? $fieldOptions : $field;
 		}
 		return $names;
@@ -40,7 +40,7 @@ class CrudGenerator {
 
 	public function fieldsForIndex() {
 		$names = array();
-		foreach ($this->config() as $field => $fieldOptions) {
+		foreach ($this->formFields() as $field => $fieldOptions) {
 			if (is_numeric($field)) {
 				$field = $fieldOptions;
 				$fieldOptions = array();
@@ -56,7 +56,7 @@ class CrudGenerator {
 	public function fieldsForForm() {
 		$options = array();
 		$query = $this->query();
-		foreach ($this->config() as $field => $fieldOptions) {
+		foreach ($this->formFields() as $field => $fieldOptions) {
 			if (is_numeric($field)) {
 				$field = $fieldOptions;
 				$fieldOptions = array();
@@ -89,7 +89,7 @@ class CrudGenerator {
 
 	public function formFieldValidators() {
 		$validators = array();
-		foreach ($this->config() as $field => $fieldOptions) {
+		foreach ($this->formFields() as $field => $fieldOptions) {
 			if (isset($fieldOptions['validators'])) {
 				$validators[$field] = array_map('trim', explode(',', $fieldOptions['validators']));
 			}
@@ -121,11 +121,13 @@ class CrudGenerator {
 	}
 
 	public function view_params_index($requestArgs) {
-		$objects = $this->query()/*->with($this->withRelations)*/->ordered_query()->get();
+		$objects = $this->query()/*->with($this->withRelations)*/
+			->ordered_query()->paginate($this->config()['pagination']);
 		return array(
-			'objects' => $objects,
+			'objects' => $objects->results,
 			'fields' => $this->fieldsForIndex(),
 			'key' => $this->controller,
+			'pagination' => \MyBooky::BS3Pagination($objects->links()),
 		);
 	}
 

@@ -1,6 +1,7 @@
 @if(count($objects) == 0)
 	<p class="no-items">{{ __('admin.'.$key.'_message_empty') }}</p>
 @else
+	{{ $pagination }}
 	<table class="table table-striped table-condensed">
 		<thead>
 			<tr>

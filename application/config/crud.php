@@ -1,161 +1,194 @@
 <?php
 return array(
 	'Author' => array(
-		'name' => array('validators' => 'required,max:100'),
-		'nickname' => array('validators' => 'max:50'),
-		'note' => array(
-			'validators' => 'max:200',
-			'type' => 'text',
+		'fields' => array(
+			'name' => array('validators' => 'required,max:100'),
+			'nickname' => array('validators' => 'max:50'),
+			'note' => array(
+				'validators' => 'max:200',
+				'type' => 'text',
+			),
+			'books' => array(
+				'index' => false
+			),
+			'contents' => array(
+				'index' => false
+			)
 		),
-		'books' => array(
-			'index' => false
-		),
-		'contents' => array(
-			'index' => false
-		),
+		'pagination' => 20
 	),
 
 	'Book' => array(
-		'title' => array(
-			'validators' => 'required,max:100',
-			'type' => 'text',
+		'fields' => array(
+			'title' => array(
+				'validators' => 'required,max:100',
+				'type' => 'text',
+			),
+			'authors',
+			'translators' => array(
+				'index' => false,
+			),
+			'compilers' => array(
+				'index' => false,
+			),
+			'illustrators' => array(
+				'index' => false,
+			),
+			'languages' => array(
+				'index' => false,
+			),
+			'themes',
+			'edition' => array(
+				'validators' => 'max:30',
+			),
+			'pub_date' => array(
+				'validators' => 'max:30',
+			),
+			'volume' => array(
+				'validators' => 'integer',
+				'index' => false,
+			),
+			'pages' => array(
+				'validators' => 'integer',
+				'index' => false,
+			),
+			'sequence',
+			'seq_num' => array(
+				'validators' => 'integer',
+				'index' => false,
+			),
+			'note' => array(
+				'validators' => 'max:200',
+				'index' => false,
+			),
+			'publishers' => array(
+				'index' => false,
+			),
+			'printhouses' => array(
+				'index' => false,
+			)
 		),
-		'authors',
-		'translators' => array(
-			'index' => false,
-		),
-		'compilers' => array(
-			'index' => false,
-		),
-		'illustrators' => array(
-			'index' => false,
-		),
-		'languages' => array(
-			'index' => false,
-		),
-		'themes',
-		'edition' => array(
-			'validators' => 'max:30',
-		),
-		'pub_date' => array(
-			'validators' => 'max:30',
-		),
-		'volume' => array(
-			'validators' => 'integer',
-			'index' => false,
-		),
-		'pages' => array(
-			'validators' => 'integer',
-			'index' => false,
-		),
-		'sequence',
-		'seq_num' => array(
-			'validators' => 'integer',
-			'index' => false,
-		),
-		'note' => array(
-			'validators' => 'max:200',
-			'index' => false,
-		),
-		'publishers' => array(
-			'index' => false,
-		),
-		'printhouses' => array(
-			'index' => false,
-		),
+		'pagination' => 20
 	),
 
 	'Compiler' => array(
-		'name' => array('validators' => 'required,max:100'),
-		'nickname' => array('validators' => 'max:50'),
-		'note' => array('validators' => 'max:200'),
-		'books' => array(
-			'index' => false
+		'fields' => array(
+			'name' => array('validators' => 'required,max:100'),
+			'nickname' => array('validators' => 'max:50'),
+			'note' => array('validators' => 'max:200'),
+			'books' => array(
+				'index' => false
+			)
 		),
+		'pagination' => 20
 	),
 
 	'Content' => array(
-		'book',
-		'idx' => array('validators' => 'required,integer'),
-		'title' => array('validators' => 'required,max:100'),
-		'authors',
-		'translators' => array(
-			'index' => false,
+		'fields' => array(
+			'book',
+			'idx' => array('validators' => 'required,integer'),
+			'title' => array('validators' => 'required,max:100'),
+			'authors',
+			'translators' => array(
+				'index' => false,
+			),
+			'illustrators' => array(
+				'index' => false,
+			),
+			'languages' => array(
+				'index' => false,
+			),
+			'themes' => array(
+				'index' => false,
+			),
+			'note' => array('validators' => 'max:200')
 		),
-		'illustrators' => array(
-			'index' => false,
-		),
-		'languages' => array(
-			'index' => false,
-		),
-		'themes' => array(
-			'index' => false,
-		),
-		'note' => array('validators' => 'max:200'),
+		'pagination' => 20
 	),
 
 	'Illustrator' => array(
-		'name' => array('validators' => 'required,max:100'),
-		'nickname' => array('validators' => 'max:50'),
-		'note' => array('validators' => 'max:200'),
-		'books' => array(
-			'index' => false
+		'fields' => array(
+			'name' => array('validators' => 'required,max:100'),
+			'nickname' => array('validators' => 'max:50'),
+			'note' => array('validators' => 'max:200'),
+			'books' => array(
+				'index' => false
+			),
+			'contents' => array(
+				'index' => false
+			)
 		),
-		'contents' => array(
-			'index' => false
-		),
+		'pagination' => 20
 	),
 
 	'Language' => array(
-		'name' => array('validators' => 'required,max:30'),
-		'books' => array(
-			'index' => false
+		'fields' => array(
+			'name' => array('validators' => 'required,max:30'),
+			'books' => array(
+				'index' => false
+			),
+			'contents' => array(
+				'index' => false
+			)
 		),
-		'contents' => array(
-			'index' => false
-		),
+		'pagination' => 20
 	),
 
 	'Printhouse' => array(
-		'name' => array('validators' => 'required,max:100'),
-		'books' => array(
-			'index' => false
+		'fields' => array(
+			'name' => array('validators' => 'required,max:100'),
+			'books' => array(
+				'index' => false
+			)
 		),
+		'pagination' => 20
 	),
 
 	'Publisher' => array(
-		'name' => array('validators' => 'required,max:100'),
-		'books' => array(
-			'index' => false
+		'fields' => array(
+			'name' => array('validators' => 'required,max:100'),
+			'books' => array(
+				'index' => false
+			)
 		),
+		'pagination' => 20
 	),
 
 	'Sequence' => array(
-		'name' => array('validators' => 'required,max:100'),
-		'books' => array(
-			'index' => false
+		'fields' => array(
+			'name' => array('validators' => 'required,max:100'),
+			'books' => array(
+				'index' => false
+			)
 		),
+		'pagination' => 20
 	),
 
 	'Theme' => array(
-		'name' => array('validators' => 'required,max:50'),
-		'books' => array(
-			'index' => false
+		'fields' => array(
+			'name' => array('validators' => 'required,max:50'),
+			'books' => array(
+				'index' => false
+			),
+			'contents' => array(
+				'index' => false
+			)
 		),
-		'contents' => array(
-			'index' => false
-		),
+		'pagination' => 20
 	),
 
 	'Translator' => array(
-		'name' => array('validators' => 'required,max:100'),
-		'nickname' => array('validators' => 'max:50'),
-		'note' => array('validators' => 'max:200'),
-		'books' => array(
-			'index' => false
+		'fields' => array(
+			'name' => array('validators' => 'required,max:100'),
+			'nickname' => array('validators' => 'max:50'),
+			'note' => array('validators' => 'max:200'),
+			'books' => array(
+				'index' => false
+			),
+			'contents' => array(
+				'index' => false
+			)
 		),
-		'contents' => array(
-			'index' => false
-		),
+		'pagination' => 20
 	),
 );
