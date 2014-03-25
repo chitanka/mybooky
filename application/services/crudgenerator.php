@@ -3,6 +3,7 @@ namespace Application\Services;
 
 use Laravel\Lang;
 use Laravel\View;
+use Laravel\Validator;
 
 class CrudGenerator {
 
@@ -18,19 +19,89 @@ class CrudGenerator {
 		return $this->controller;
 	}
 
-	public function query() {
-		return new $this->model();
-	}
-
 	public function findObject($id) {
 		return $this->query()/*->with($this->withRelations)*/->find($id);
 	}
 
-	public function formFields() {
+	public function createObject($requestParams) {
+		$validation = Validator::make($requestParams, $this->formFieldValidators());
+		if ($validation->fails()) {
+			throw new ValidationException($validation->errors);
+		}
+		$object = new $this->model;
+
+		$relations = array();
+		foreach ($this->fieldNames() as $field) {
+			if (!array_key_exists($field, $requestParams)) {
+				continue;
+			}
+			$value = $requestParams[$field];
+			if (is_array($value)) {
+				$relations[$field] = $value;
+			} else {
+				$object->$field = $value;
+			}
+		}
+		$object->save();
+		$object->fill($relations);
+		$object->save();
+
+		return $object;
+	}
+
+	public function updateObject($id, $requestParams) {
+		$validation = Validator::make($requestParams, $this->formFieldValidators());
+		if ($validation->fails()) {
+			throw new ValidationException($validation->errors);
+		}
+		$object = $this->findObject($id);
+		if ($object === null) {
+			throw new NotFoundException();
+		}
+
+		foreach ($this->fieldNames() as $field) {
+			if (array_key_exists($field, $requestParams)) {
+				$object->$field = $requestParams[$field];
+			}
+		}
+		$object->save();
+
+		return $object;
+	}
+
+	public function deleteObject($id) {
+		$object = $this->findObject($id);
+		if ($object === null) {
+			throw new NotFoundException();
+		}
+		$object->delete();
+
+		return $object;
+	}
+
+	public function title($action, $args = array()) {
+		return Lang::line("admin.{$this->controller}_title_{$action}", $args);
+	}
+
+	public function message($action, $args = array()) {
+		return Lang::line("admin.{$this->controller}_message_{$action}", $args);
+	}
+
+	public function content($action, array $requestParams = array()) {
+		$customView = "{$this->controller}.$action";
+		$view = View::exists($customView) ? $customView : "crud.$action";
+		return View::make($view)->with($this->view_params($action, $requestParams));
+	}
+
+	protected function query() {
+		return new $this->model();
+	}
+
+	protected function formFields() {
 		return $this->config()['fields'];
 	}
 
-	public function fieldNames() {
+	protected function fieldNames() {
 		$names = array();
 		foreach ($this->formFields() as $field => $fieldOptions) {
 			$names[] = is_numeric($field) ? $fieldOptions : $field;
@@ -38,7 +109,7 @@ class CrudGenerator {
 		return $names;
 	}
 
-	public function fieldsForIndex() {
+	protected function fieldsForIndex() {
 		$names = array();
 		foreach ($this->formFields() as $field => $fieldOptions) {
 			if (is_numeric($field)) {
@@ -53,7 +124,7 @@ class CrudGenerator {
 		return $names;
 	}
 
-	public function fieldsForForm() {
+	protected function fieldsForForm() {
 		$options = array();
 		$query = $this->query();
 		foreach ($this->formFields() as $field => $fieldOptions) {
@@ -87,7 +158,7 @@ class CrudGenerator {
 		return $options;
 	}
 
-	public function formFieldValidators() {
+	protected function formFieldValidators() {
 		$validators = array();
 		foreach ($this->formFields() as $field => $fieldOptions) {
 			if (isset($fieldOptions['validators'])) {
@@ -97,30 +168,16 @@ class CrudGenerator {
 		return $validators;
 	}
 
-	public function title($action, $args = array()) {
-		return Lang::line("admin.{$this->controller}_title_{$action}", $args);
-	}
-
-	public function message($action, $args = array()) {
-		return Lang::line("admin.{$this->controller}_message_{$action}", $args);
-	}
-
-	public function content($action, array $requestArgs = array()) {
-		$customView = "{$this->controller}.$action";
-		$view = View::exists($customView) ? $customView : "crud.$action";
-		return View::make($view)->with($this->view_params($action, $requestArgs));
-	}
-
-	public function view_params($action, $requestArgs) {
+	protected function view_params($action, $requestParams) {
 		switch ($action) {
-			case 'index': return $this->view_params_index($requestArgs);
-			case 'create': return $this->view_params_create($requestArgs);
-			case 'edit': return $this->view_params_edit($requestArgs);
-			case 'view': return $this->view_params_view($requestArgs);
+			case 'index': return $this->view_params_index($requestParams);
+			case 'create': return $this->view_params_create($requestParams);
+			case 'edit': return $this->view_params_edit($requestParams);
+			case 'view': return $this->view_params_view($requestParams);
 		}
 	}
 
-	public function view_params_index($requestArgs) {
+	protected function view_params_index($requestParams) {
 		$objects = $this->query()/*->with($this->withRelations)*/
 			->ordered_query()->paginate($this->config()['pagination']);
 		return array(
@@ -131,7 +188,7 @@ class CrudGenerator {
 		);
 	}
 
-	public function view_params_create($requestArgs) {
+	protected function view_params_create($requestParams) {
 		return array(
 			'fields' => $this->fieldsForForm(),
 			'key' => $this->controller,
@@ -139,21 +196,21 @@ class CrudGenerator {
 		);
 	}
 
-	public function view_params_edit($requestArgs) {
+	protected function view_params_edit($requestParams) {
 		return array(
-			'object' => $requestArgs['object'],
-		) + $this->view_params_create($requestArgs);
+			'object' => $requestParams['object'],
+		) + $this->view_params_create($requestParams);
 	}
 
-	public function view_params_view($requestArgs) {
+	protected function view_params_view($requestParams) {
 		return array(
-			'object' => $requestArgs['object'],
+			'object' => $requestParams['object'],
 			'key' => $this->controller,
 			'fields' => $this->fieldNames(),
 		);
 	}
 
-	public function config() {
+	protected function config() {
 		return $this->fullConfig($this->model);
 	}
 

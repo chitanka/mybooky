@@ -1,5 +1,11 @@
 <?php
 
+use Laravel\Redirect;
+use Laravel\Session;
+use Application\Services\CrudGenerator;
+use Application\Services\ValidationException;
+use Application\Services\NotFoundException;
+
 class Crud_Controller extends Base_Controller {
 
 	/**
@@ -44,28 +50,14 @@ class Crud_Controller extends Base_Controller {
 	 */
 	public function post_create() {
 		$generator = $this->generator();
-		$validation = Validator::make(Input::all(), $generator->formFieldValidators());
-		if ($validation->fails()) {
-			return $this->redirectToInvalidForm("{$generator->controllerName()}/create", $validation);
+		try {
+			$object = $generator->createObject(Input::all());
+		} catch (ValidationException $ex) {
+			return $this->redirectToInvalidForm("{$generator->controllerName()}/create", $ex->getErrors());
 		}
-		$object = new $this->model;
+		$this->setFlashMessage($generator->message('created', array('name' => $object)));
 
-		$relations = array();
-		foreach ($generator->fieldNames() as $field) {
-			$value = Input::get($field);
-			if (is_array($value)) {
-				$relations[$field] = $value;
-			} else {
-				$object->$field = $value;
-			}
-		}
-		$object->save();
-		$object->fill($relations);
-		$object->save();
-
-		Session::flash('message', $generator->message('created', array('name' => $object)));
-
-		return Redirect::to($generator->controllerName());
+		return $this->redirectToIndex();
 	}
 
 	/**
@@ -76,10 +68,9 @@ class Crud_Controller extends Base_Controller {
 	 */
 	public function get_view($id) {
 		$generator = $this->generator();
-
 		$object = $generator->findObject($id);
 		if ($object === null) {
-			return Redirect::to($generator->controllerName());
+			return $this->redirectToIndex();
 		}
 		$this->layout->title = $generator->title('view', array('name' => $object));
 		$this->layout->content = $generator->content('view', array('object' => $object));
@@ -93,10 +84,9 @@ class Crud_Controller extends Base_Controller {
 	 */
 	public function get_edit($id) {
 		$generator = $this->generator();
-
 		$object = $generator->findObject($id);
 		if ($object === null) {
-			return Redirect::to($generator->controllerName());
+			return $this->redirectToIndex();
 		}
 		$this->layout->title = $generator->title('edit', array('name' => $object));
 		$this->layout->content = $generator->content('edit', array('object' => $object));
@@ -110,24 +100,16 @@ class Crud_Controller extends Base_Controller {
 	 */
 	public function post_edit($id) {
 		$generator = $this->generator();
-
-		$validation = Validator::make(Input::all(), $generator->formFieldValidators());
-		if ($validation->fails()) {
-			return $this->redirectToInvalidForm("{$generator->controllerName()}/edit/$id", $validation);
+		try {
+			$object = $generator->updateObject($id, Input::all());
+		} catch (ValidationException $ex) {
+			return $this->redirectToInvalidForm("{$generator->controllerName()}/edit/$id", $ex->getErrors());
+		} catch (NotFoundException $ex) {
+			return $this->redirectToIndex();
 		}
-		$object = $generator->findObject($id);
-		if ($object === null) {
-			return Redirect::to($generator->controllerName());
-		}
+		$this->setFlashMessage($generator->message('edited', array('name' => $object)));
 
-		foreach ($generator->fieldNames() as $field) {
-			$object->$field = Input::get($field);
-		}
-		$object->save();
-
-		Session::flash('message', $generator->message('edited', array('name' => $object)));
-
-		return Redirect::to($generator->controllerName());
+		return $this->redirectToIndex();
 	}
 
 	/**
@@ -138,29 +120,36 @@ class Crud_Controller extends Base_Controller {
 	 */
 	public function get_delete($id) {
 		$generator = $this->generator();
-
-		$object = $generator->findObject($id);
-		if ($object !== null) {
-			$object->delete();
-			Session::flash('message', $generator->message('deleted', array('name' => $object)));
+		try {
+			$object = $generator->deleteObject($id);
+		} catch (NotFoundException $ex) {
+			return $this->redirectToIndex();
 		}
-		return Redirect::to($generator->controllerName());
+		$this->setFlashMessage($generator->message('deleted', array('name' => $object)));
+
+		return $this->redirectToIndex();
 	}
 
-	protected function redirectToInvalidForm($route, $validation) {
-		return Redirect::to($route)
-			->with_errors($validation->errors)
-			->with_input();
+	protected function redirectToInvalidForm($route, $errors) {
+		return Redirect::to($route)->with_errors($errors)->with_input();
+	}
+
+	protected function redirectToIndex() {
+		return Redirect::to($this->generator()->controllerName());
+	}
+
+	protected function setFlashMessage($message) {
+		Session::flash('message', $message);
 	}
 
 	private $generator;
-	/** @return Application\Services\CrudGenerator */
+	/** @return CrudGenerator */
 	protected function generator() {
 		return $this->generator ?: $this->generator = $this->newGenerator($this->model, $this->controllerName());
 	}
 
 	protected function newGenerator($model, $controller) {
-		return new Application\Services\CrudGenerator($model, $controller);
+		return new CrudGenerator($model, $controller);
 	}
 
 	protected function controllerName() {
