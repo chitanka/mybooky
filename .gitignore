@@ -9,6 +9,7 @@
 *.vi
 *~
 *.sass-cache
+*.bak
 
 # OS or Editor folders
 .DS_Store
@@ -35,3 +36,6 @@ dwsync.xml
 intermediate
 publish
 .idea
+
+# My additions
+art.cmd
