@@ -5,7 +5,7 @@ use Laravel\Lang;
 use Laravel\View;
 use Laravel\Validator;
 
-class CrudGenerator {
+class ObjectManager {
 
 	protected $model;
 	protected $controller;
