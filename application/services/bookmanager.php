@@ -8,27 +8,6 @@ class BookManager extends ObjectManager {
 	}
 
 	public function view_params_create($requestParams) {
-		$b = \Book::find(14);
-		$b->set_contents(array (
-    0 =>
-    array (
-      'idx' => '1',
-      'title' => 'загл1',
-      'note' => '',
-    ),
-    1 =>
-    array (
-      'idx' => '2',
-      'title' => 'загл 2',
-      'authors' =>
-      array (
-        0 => '8',
-      ),
-      'note' => '',
-    ),
-  ));
-		#$b->save();
-
 		$contentManager = new ObjectManager('Content');
 		$contentParams = $contentManager->view_params_create($requestParams);
 		unset($contentParams['fields']['book']);
