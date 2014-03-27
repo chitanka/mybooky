@@ -200,7 +200,7 @@ return array(
 
 	'menu' => array(
 		'books',
-		'contents',
+		//'contents',
 		'persons' => array('authors', 'translators', 'compilers', 'illustrators'),
 		'secondary' => array('publishers', 'printhouses', 'sequences', 'themes', 'languages'),
 	),

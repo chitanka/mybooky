@@ -1,4 +1,6 @@
 <?php
+use Application\Services\BookManager;
+
 class Books_Controller extends Crud_Controller {
 
 	protected $model = 'Book';
@@ -13,4 +15,8 @@ class Books_Controller extends Crud_Controller {
 		'publishers',
 		'printhouses',
 	);
+
+	protected function newManager() {
+		return new BookManager($this->model);
+	}
 }

@@ -101,4 +101,8 @@ class Book extends Model {
 			$this->sequence_id = $sequence;
 		}
 	}
+
+	public function set_contents($contents) {
+		$this->contents()->save($contents);
+	}
 }

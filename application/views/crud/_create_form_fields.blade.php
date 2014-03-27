@@ -1,7 +1,7 @@
 	@foreach($fields as $field => $options)
 	@if( $options['create'] )
 		<div class="form-group">
-			<label for="{{ $field }}" class="col-sm-2 control-label">{{ __('admin.field_'.$field) }}</label>
+			<label for="{{ $field }}" class="col-sm-2 control-label">{{ __('admin.field_'.$options['label']) }}</label>
 			<div class="col-sm-10">
 			@if( $options['type'] == 'textarea' )
 				{{ Form::textarea($field, Input::old($field), array('class' => 'form-control')) }}

@@ -11,7 +11,13 @@
 		@include('crud._create_form_fields')
 	</div>
 	<div class="tab-pane" id="contents">
-		Съдържание
+
+		<div class="panel-group" id="accordion">
+			@foreach($contents as $key => $content)
+				@render('books._create_content_form_fields', array('key' => $key, 'fields' => $content))
+			@endforeach
+		</div>
+
 	</div>
 	@include('crud._create_form_submit')
 </div>

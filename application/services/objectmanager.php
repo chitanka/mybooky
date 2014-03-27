@@ -12,7 +12,7 @@ class ObjectManager {
 
 	public function __construct($model, $controller = null) {
 		$this->model = $model;
-		$this->controller = $controller ?: $this->model.'s';
+		$this->controller = $controller ?: strtolower($this->model).'s';
 	}
 
 	public function controllerName() {
@@ -148,6 +148,9 @@ class ObjectManager {
 			if (!isset($fieldOptions['type'])) {
 				$fieldOptions['type'] = 'text';
 			}
+			if (!isset($fieldOptions['label'])) {
+				$fieldOptions['label'] = $field;
+			}
 			foreach (array('create', 'edit') as $action) {
 				if (!isset($fieldOptions[$action])) {
 					$fieldOptions[$action] = true;
@@ -188,7 +191,7 @@ class ObjectManager {
 		);
 	}
 
-	protected function view_params_create($requestParams) {
+	public function view_params_create($requestParams) {
 		return array(
 			'fields' => $this->fieldsForForm(),
 			'key' => $this->controller,
