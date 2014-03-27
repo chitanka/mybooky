@@ -81,6 +81,8 @@ class Init {
 			$table->string('title', 250);
 			$table->string('note', 200)->nullable();
 			$table->timestamps();
+			$table->foreign('book_id')->references('id')->on('books')
+				->on_delete('cascade')->on_update('cascade');
 		});
 
 		// RELATIONS
@@ -89,78 +91,130 @@ class Init {
 			$table->integer('book_id')->unsigned();
 			$table->integer('author_id')->unsigned();
 			$table->timestamps();
+			$table->foreign('book_id')->references('id')->on('books')
+				->on_delete('cascade')->on_update('cascade');
+			$table->foreign('author_id')->references('id')->on('authors')
+				->on_delete('restrict')->on_update('restrict');
 		});
 		Schema::create('book_compiler', function($table) {
 			$table->increments('id');
 			$table->integer('book_id')->unsigned();
 			$table->integer('compiler_id')->unsigned();
 			$table->timestamps();
+			$table->foreign('book_id')->references('id')->on('books')
+				->on_delete('cascade')->on_update('cascade');
+			$table->foreign('compiler_id')->references('id')->on('compilers')
+				->on_delete('restrict')->on_update('restrict');
 		});
 		Schema::create('book_illustrator', function($table) {
 			$table->increments('id');
 			$table->integer('book_id')->unsigned();
 			$table->integer('illustrator_id')->unsigned();
 			$table->timestamps();
+			$table->foreign('book_id')->references('id')->on('books')
+				->on_delete('cascade')->on_update('cascade');
+			$table->foreign('illustrator_id')->references('id')->on('illustrators')
+				->on_delete('restrict')->on_update('restrict');
 		});
 		Schema::create('book_language', function($table) {
 			$table->increments('id');
 			$table->integer('book_id')->unsigned();
 			$table->integer('language_id')->unsigned();
 			$table->timestamps();
+			$table->foreign('book_id')->references('id')->on('books')
+				->on_delete('cascade')->on_update('cascade');
+			$table->foreign('language_id')->references('id')->on('languages')
+				->on_delete('restrict')->on_update('restrict');
 		});
 		Schema::create('book_printhouse', function($table) {
 			$table->increments('id');
 			$table->integer('book_id')->unsigned();
 			$table->integer('printhouse_id')->unsigned();
 			$table->timestamps();
+			$table->foreign('book_id')->references('id')->on('books')
+				->on_delete('cascade')->on_update('cascade');
+			$table->foreign('printhouse_id')->references('id')->on('printhouses')
+				->on_delete('restrict')->on_update('restrict');
 		});
 		Schema::create('book_publisher', function($table) {
 			$table->increments('id');
 			$table->integer('book_id')->unsigned();
 			$table->integer('publisher_id')->unsigned();
 			$table->timestamps();
+			$table->foreign('book_id')->references('id')->on('books')
+				->on_delete('cascade')->on_update('cascade');
+			$table->foreign('publisher_id')->references('id')->on('publishers')
+				->on_delete('restrict')->on_update('restrict');
 		});
 		Schema::create('book_theme', function($table) {
 			$table->increments('id');
 			$table->integer('book_id')->unsigned();
 			$table->integer('theme_id')->unsigned();
 			$table->timestamps();
+			$table->foreign('book_id')->references('id')->on('books')
+				->on_delete('cascade')->on_update('cascade');
+			$table->foreign('theme_id')->references('id')->on('themes')
+				->on_delete('restrict')->on_update('restrict');
 		});
 		Schema::create('book_translator', function($table) {
 			$table->increments('id');
 			$table->integer('book_id')->unsigned();
 			$table->integer('translator_id')->unsigned();
 			$table->timestamps();
+			$table->foreign('book_id')->references('id')->on('books')
+				->on_delete('cascade')->on_update('cascade');
+			$table->foreign('translator_id')->references('id')->on('translators')
+				->on_delete('restrict')->on_update('restrict');
 		});
 		Schema::create('content_author', function($table) {
 			$table->increments('id');
 			$table->integer('content_id')->unsigned();
 			$table->integer('author_id')->unsigned();
 			$table->timestamps();
+			$table->foreign('content_id')->references('id')->on('contents')
+				->on_delete('cascade')->on_update('cascade');
+			$table->foreign('author_id')->references('id')->on('authors')
+				->on_delete('restrict')->on_update('restrict');
 		});
 		Schema::create('content_illustrator', function($table) {
 			$table->increments('id');
 			$table->integer('content_id')->unsigned();
 			$table->integer('illustrator_id')->unsigned();
 			$table->timestamps();
+			$table->foreign('content_id')->references('id')->on('contents')
+				->on_delete('cascade')->on_update('cascade');
+			$table->foreign('illustrator_id')->references('id')->on('illustrators')
+				->on_delete('restrict')->on_update('restrict');
 		});
 		Schema::create('content_language', function($table) {
 			$table->increments('id');
 			$table->integer('content_id')->unsigned();
 			$table->integer('language_id')->unsigned();
 			$table->timestamps();
+			$table->foreign('content_id')->references('id')->on('contents')
+				->on_delete('cascade')->on_update('cascade');
+			$table->foreign('language_id')->references('id')->on('languages')
+				->on_delete('restrict')->on_update('restrict');
 		});
 		Schema::create('content_theme', function($table) {
 			$table->increments('id');
 			$table->integer('content_id')->unsigned();
 			$table->integer('theme_id')->unsigned();
 			$table->timestamps();
+			$table->foreign('content_id')->references('id')->on('contents')
+				->on_delete('cascade')->on_update('cascade');
+			$table->foreign('theme_id')->references('id')->on('themes')
+				->on_delete('restrict')->on_update('restrict');
 		});
 		Schema::create('content_translator', function($table) {
 			$table->increments('id');
 			$table->integer('content_id')->unsigned();
 			$table->integer('translator_id')->unsigned();
 			$table->timestamps();
+			$table->foreign('content_id')->references('id')->on('contents')
+				->on_delete('cascade')->on_update('cascade');
+			$table->foreign('translator_id')->references('id')->on('translators')
+				->on_delete('restrict')->on_update('restrict');
 		});
 
 	}
@@ -171,17 +225,6 @@ class Init {
 	 * @return void
 	 */
 	public function down() {
-		Schema::drop('authors');
-		Schema::drop('translators');
-		Schema::drop('compilers');
-		Schema::drop('illustrators');
-		Schema::drop('languages');
-		Schema::drop('sequences');
-		Schema::drop('themes');
-		Schema::drop('publishers');
-		Schema::drop('printhouses');
-		Schema::drop('books');
-		Schema::drop('contents');
 		Schema::drop('book_author');
 		Schema::drop('book_compiler');
 		Schema::drop('book_illustrator');
@@ -195,6 +238,17 @@ class Init {
 		Schema::drop('content_language');
 		Schema::drop('content_theme');
 		Schema::drop('content_translator');
+		Schema::drop('contents');
+		Schema::drop('authors');
+		Schema::drop('translators');
+		Schema::drop('compilers');
+		Schema::drop('illustrators');
+		Schema::drop('languages');
+		Schema::drop('sequences');
+		Schema::drop('themes');
+		Schema::drop('publishers');
+		Schema::drop('printhouses');
+		Schema::drop('books');
 	}
 
 }
