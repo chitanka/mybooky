@@ -35,7 +35,7 @@
 	<script src="{{ asset('select2-3.4.5/select2.min.js') }}"></script>
 	<script>
 		$(document).ready(function() {
-			$('select').select2({allowClear: true});
+			$('select').select2();
 		});
 	</script>
 @endsection

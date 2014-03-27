@@ -102,7 +102,4 @@ class Book extends Model {
 		}
 	}
 
-	public function set_contents($contents) {
-		$this->contents()->save($contents);
-	}
 }

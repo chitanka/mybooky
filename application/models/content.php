@@ -52,6 +52,9 @@ class Content extends Model {
 		if (is_numeric($book)) {
 			$this->book_id = $book;
 		}
+		if ($book instanceof Book) {
+			$this->book_id = $book->id;
+		}
 	}
 
 	public function set_authors($authorIds) {

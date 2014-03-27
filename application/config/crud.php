@@ -85,6 +85,9 @@ return array(
 
 	'Content' => array(
 		'fields' => array(
+			'id' => array(
+				'type' => 'hidden',
+			),
 			'book',
 			'idx' => array('validators' => 'required,integer'),
 			'title' => array('validators' => 'required,max:100'),

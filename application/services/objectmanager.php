@@ -42,6 +42,14 @@ class ObjectManager {
 				$object->$field = $value;
 			}
 		}
+		if ($object->id) {
+			// make an UPDATE, not an INSERT
+			$object->exists = true;
+		} else {
+			// the ID, even if empty, causes the object to be inserted twice in the database
+			unset($object->id);
+		}
+		// the relations can be saved only if the object has an ID
 		$object->save();
 		$object->fill($relations);
 		$object->save();
@@ -151,6 +159,9 @@ class ObjectManager {
 			if (!isset($fieldOptions['label'])) {
 				$fieldOptions['label'] = $field;
 			}
+			if (!isset($fieldOptions['name'])) {
+				$fieldOptions['name'] = $field;
+			}
 			foreach (array('create', 'edit') as $action) {
 				if (!isset($fieldOptions[$action])) {
 					$fieldOptions[$action] = true;
@@ -175,12 +186,12 @@ class ObjectManager {
 		switch ($action) {
 			case 'index': return $this->view_params_index($requestParams);
 			case 'create': return $this->view_params_create($requestParams);
-			case 'edit': return $this->view_params_edit($requestParams);
-			case 'view': return $this->view_params_view($requestParams);
+			case 'edit': return $this->view_params_edit($requestParams['object'], $requestParams);
+			case 'view': return $this->view_params_view($requestParams['object'], $requestParams);
 		}
 	}
 
-	protected function view_params_index($requestParams) {
+	protected function view_params_index($requestParams = null) {
 		$objects = $this->query()/*->with($this->withRelations)*/
 			->ordered_query()->paginate($this->config()['pagination']);
 		return array(
@@ -191,7 +202,7 @@ class ObjectManager {
 		);
 	}
 
-	public function view_params_create($requestParams) {
+	public function view_params_create($requestParams = null) {
 		return array(
 			'fields' => $this->fieldsForForm(),
 			'key' => $this->controller,
@@ -199,15 +210,15 @@ class ObjectManager {
 		);
 	}
 
-	protected function view_params_edit($requestParams) {
+	public function view_params_edit($object, $requestParams = null) {
 		return array(
-			'object' => $requestParams['object'],
+			'object' => $object,
 		) + $this->view_params_create($requestParams);
 	}
 
-	protected function view_params_view($requestParams) {
+	protected function view_params_view($object, $requestParams = null) {
 		return array(
-			'object' => $requestParams['object'],
+			'object' => $object,
 			'key' => $this->controller,
 			'fields' => $this->fieldNames(),
 		);
