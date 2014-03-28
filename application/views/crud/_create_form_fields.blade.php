@@ -2,7 +2,7 @@
 	@if( $options['create'] )
 		<div class="form-group">
 			@if ( $options['type'] != 'hidden' )
-			<label for="{{ $field }}" class="col-sm-2 control-label">{{ __('admin.field_'.$options['label']) }}</label>
+				{{ Form::label($options['name'], __('admin.field_'.$options['label']), array('class' => 'col-sm-2 control-label')) }}
 			@endif
 			<div class="col-sm-10">
 			@if( $options['type'] == 'textarea' )
