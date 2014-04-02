@@ -28,6 +28,8 @@
 								</ul>
 							@elseif ( is_object($object->$field) )
 								<a href="{{ URL::to($field.'s/view/'.$object->$field->id) }}">{{ $object->$field }}</a>
+							@elseif ( $options['view_link'] )
+								<a href="{{ URL::to($key.'/view/'.$object->id) }}">{{ $object->$field }}</a>
 							@else
 								{{ $object->$field }}
 							@endif

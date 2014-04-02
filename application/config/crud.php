@@ -2,7 +2,10 @@
 return array(
 	'Author' => array(
 		'fields' => array(
-			'name' => array('validators' => 'required,max:100'),
+			'name' => array(
+				'validators' => 'required,max:100',
+				'view_link' => 'true',
+			),
 			'nickname' => array('validators' => 'max:50'),
 			'note' => array(
 				'validators' => 'max:200',
@@ -23,6 +26,7 @@ return array(
 			'title' => array(
 				'validators' => 'required,max:100',
 				'type' => 'text',
+				'view_link' => 'true',
 			),
 			'authors',
 			'translators' => array(
@@ -73,7 +77,10 @@ return array(
 
 	'Compiler' => array(
 		'fields' => array(
-			'name' => array('validators' => 'required,max:100'),
+			'name' => array(
+				'validators' => 'required,max:100',
+				'view_link' => 'true',
+			),
 			'nickname' => array('validators' => 'max:50'),
 			'note' => array('validators' => 'max:200'),
 			'books' => array(
@@ -111,7 +118,10 @@ return array(
 
 	'Illustrator' => array(
 		'fields' => array(
-			'name' => array('validators' => 'required,max:100'),
+			'name' => array(
+				'validators' => 'required,max:100',
+				'view_link' => 'true',
+			),
 			'nickname' => array('validators' => 'max:50'),
 			'note' => array('validators' => 'max:200'),
 			'books' => array(
@@ -126,7 +136,10 @@ return array(
 
 	'Language' => array(
 		'fields' => array(
-			'name' => array('validators' => 'required,max:30'),
+			'name' => array(
+				'validators' => 'required,max:30',
+				'view_link' => 'true',
+			),
 			'books' => array(
 				'index' => false
 			),
@@ -139,7 +152,10 @@ return array(
 
 	'Printhouse' => array(
 		'fields' => array(
-			'name' => array('validators' => 'required,max:100'),
+			'name' => array(
+				'validators' => 'required,max:100',
+				'view_link' => 'true',
+			),
 			'books' => array(
 				'index' => false
 			)
@@ -149,7 +165,10 @@ return array(
 
 	'Publisher' => array(
 		'fields' => array(
-			'name' => array('validators' => 'required,max:100'),
+			'name' => array(
+				'validators' => 'required,max:100',
+				'view_link' => 'true',
+			),
 			'books' => array(
 				'index' => false
 			)
@@ -159,7 +178,10 @@ return array(
 
 	'Sequence' => array(
 		'fields' => array(
-			'name' => array('validators' => 'required,max:100'),
+			'name' => array(
+				'validators' => 'required,max:100',
+				'view_link' => 'true',
+			),
 			'books' => array(
 				'index' => false
 			)
@@ -169,7 +191,10 @@ return array(
 
 	'Theme' => array(
 		'fields' => array(
-			'name' => array('validators' => 'required,max:50'),
+			'name' => array(
+				'validators' => 'required,max:50',
+				'view_link' => 'true',
+			),
 			'books' => array(
 				'index' => false
 			),
@@ -182,7 +207,10 @@ return array(
 
 	'Translator' => array(
 		'fields' => array(
-			'name' => array('validators' => 'required,max:100'),
+			'name' => array(
+				'validators' => 'required,max:100',
+				'view_link' => 'true',
+			),
 			'nickname' => array('validators' => 'max:50'),
 			'note' => array('validators' => 'max:200'),
 			'books' => array(

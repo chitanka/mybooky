@@ -106,7 +106,7 @@ class ObjectManager {
 	}
 
 	protected function formFields() {
-		return $this->config()['fields'];
+		return $this->config('fields');
 	}
 
 	protected function fieldNames() {
@@ -126,6 +126,9 @@ class ObjectManager {
 			}
 			if (!isset($fieldOptions['index'])) {
 				$fieldOptions['index'] = true;
+			}
+			if (!isset($fieldOptions['view_link'])) {
+				$fieldOptions['view_link'] = false;
 			}
 			$names[$field] = $fieldOptions;
 		}
@@ -193,7 +196,8 @@ class ObjectManager {
 
 	protected function view_params_index($requestParams = null) {
 		$objects = $this->query()/*->with($this->withRelations)*/
-			->ordered_query()->paginate($this->config()['pagination']);
+			->ordered_query()->paginate($this->config('pagination'));
+		// echo "<pre>"; print_r($objects);
 		return array(
 			'objects' => $objects->results,
 			'fields' => $this->fieldsForIndex(),
@@ -217,6 +221,7 @@ class ObjectManager {
 	}
 
 	protected function view_params_view($object, $requestParams = null) {
+		$object->authors;
 		return array(
 			'object' => $object,
 			'key' => $this->controller,
@@ -224,8 +229,16 @@ class ObjectManager {
 		);
 	}
 
-	protected function config() {
-		return $this->fullConfig($this->model);
+	protected function config($itemName = null) {
+		$result = $this->fullConfig($this->model);
+		if ($itemName == null)
+		{
+			return $result;
+		}
+		else
+		{
+			return $result[$itemName];
+		}
 	}
 
 	private $fullConfig;
