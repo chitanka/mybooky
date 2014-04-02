@@ -221,7 +221,6 @@ class ObjectManager {
 	}
 
 	protected function view_params_view($object, $requestParams = null) {
-		$object->authors;
 		return array(
 			'object' => $object,
 			'key' => $this->controller,

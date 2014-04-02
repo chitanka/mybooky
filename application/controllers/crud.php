@@ -125,8 +125,12 @@ class Crud_Controller extends Base_Controller {
 		} catch (NotFoundException $ex) {
 			return $this->redirectToIndex();
 		}
-		$this->setFlashMessage($manager->message('deleted', array('name' => $object)));
+		catch (\Exception $ex) {
+			$this->setFlashMessage(Lang::line('admin.delete_error'));
+			return $this->redirectToIndex();
+		}
 
+		$this->setFlashMessage($manager->message('deleted', array('name' => $object)));
 		return $this->redirectToIndex();
 	}
 
